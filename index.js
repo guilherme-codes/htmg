@@ -1,8 +1,31 @@
-import { promises as fs } from 'fs';
-import path from 'path';
-import LayoutReader from './LayoutReader.js';
+const fs = require('fs').promises;
+const path = require('path');
 
-const reader = new LayoutReader('layouts');
+async function readLayoutFiles(layoutDir) {
+    const layouts = {};
+    
+    // Lê todos os diretórios dentro de layouts
+    const directories = await fs.readdir(layoutDir);
+    
+    for (const dir of directories) {
+        const dirPath = path.join(layoutDir, dir);
+        const stat = await fs.stat(dirPath);
+        
+        if (stat.isDirectory()) {
+            // Lê todos os arquivos dentro do diretório do layout
+            const files = await fs.readdir(dirPath);
+            layouts[dir] = {};
+            
+            for (const file of files) {
+                const filePath = path.join(dirPath, file);
+                const content = await fs.readFile(filePath, 'utf-8');
+                layouts[dir][path.parse(file).name] = content;
+            }
+        }
+    }
+    
+    return layouts;
+}
 
 async function processLayoutRecursive(content, partials, processedIncludes = new Set()) {
     let processedContent = content;
@@ -51,7 +74,7 @@ async function compileLayouts() {
         await fs.mkdir('dist').catch(() => {});
         
         // Lê todos os layouts e seus arquivos
-        const layouts = await reader.readLayouts('layouts');
+        const layouts = await readLayoutFiles('layouts');
         
         // Processa cada layout
         for (const [layoutName, files] of Object.entries(layouts)) {
