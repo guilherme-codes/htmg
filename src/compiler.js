@@ -19,7 +19,7 @@ export async function compileLayouts() {
       }
             
       // Processa o arquivo index com seus partials recursivamente
-      let compiledContent = await processLayoutRecursive(files.index, files)
+      let compiledContent = processLayoutRecursive(files.index, files)
             
       // Salva o arquivo compilado
       const outputPath = path.join('dist', `${layoutName}.html`)

@@ -1,4 +1,4 @@
-export async function processLayoutRecursive(content, partials, processedIncludes = new Set()) {
+export function processLayoutRecursive(content, partials, processedIncludes = new Set()) {
   let processedContent = content
   const includeRegex = /<!--\s*include:\s*(\w+)\s*-->/g
     
@@ -18,12 +18,12 @@ export async function processLayoutRecursive(content, partials, processedInclude
       processedIncludes.add(partialName)
             
       // Processa recursivamente o conteúdo do partial antes de incluí-lo
-      const processedPartial = await processLayoutRecursive(
+      const processedPartial = processLayoutRecursive(
         partials[partialName],
         partials,
         new Set(processedIncludes)
       )
-            
+      
       processedContent = processedContent.replace(fullMatch, processedPartial)
       hasChanges = true
     } else {
