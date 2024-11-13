@@ -15,5 +15,8 @@
   "type": "module",
   "devDependencies": {
     "eslint": "^9.14.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0"
   }
 }
