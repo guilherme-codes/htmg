@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 import { processLayoutRecursive } from './process.js'
-import { readLayoutFiles } from './reader.js'
+import FileReader from './FileReader.js'
 
 export async function compileLayouts() {
   try {
@@ -9,7 +9,8 @@ export async function compileLayouts() {
     await fs.mkdir('dist').catch(() => {})
         
     // Lê todos os layouts e seus arquivos
-    const layouts = await readLayoutFiles('layouts')
+    const fileReader = new FileReader()
+    const layouts = await fileReader.readLayouts()
         
     // Processa cada layout
     for (const [layoutName, files] of Object.entries(layouts)) {
