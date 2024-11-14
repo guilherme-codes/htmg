@@ -26,8 +26,8 @@ class FileReader {
      * @returns {Promise<Object>} Layout contents organized by directory and partials.
      */
   async readLayouts() {
-    const directories = await this.#getDirectories()
-    const layoutContents = await this.#processLayoutDirectories(directories)
+    const directories = await this.#getDirectoriesList()
+    const layoutContents = await this.#processLayoutDirectoryContent(directories)
 
     return Object.fromEntries(layoutContents)
   }
@@ -50,7 +50,7 @@ class FileReader {
      * Gets all directory entries from the base path
      * @returns {Promise<Array>} Array of directory entries
      */
-  async #getDirectories() {
+  async #getDirectoriesList() {
     const entries = await fs.readdir(this.#basePath, { withFileTypes: true })
     return entries.filter(entry => entry.isDirectory())
   }
@@ -60,7 +60,7 @@ class FileReader {
      * @param {Array} directories Array of directory entries
      * @returns {Promise<Array>} Array of processed directory contents
      */
-  async #processLayoutDirectories(directories) {
+  async #processLayoutDirectoryContent(directories) {
     const directoryPromises = directories.map(dir => 
       this.#readDirectoryContent(dir)
     )
@@ -75,7 +75,7 @@ class FileReader {
   async #readDirectoryContent(directory) {
     const directoryPath = path.join(this.#basePath, directory.name)
     const files = await fs.readdir(directoryPath)
-    const contents = await this.#processFileDirectory(files, directoryPath)
+    const contents = await this.#readDirectoryFiles(files, directoryPath)
 
     return [directory.name, contents]
   }
@@ -87,7 +87,7 @@ class FileReader {
      * @param {string} dirPath Path to the directory
      * @returns {Promise<Object>} Object containing file contents
      */
-  async #processFileDirectory(files, dirPath) {
+  async #readDirectoryFiles(files, dirPath) {
     const filePromises = files.map(file => 
       this.#readFileContent(file, dirPath)
     )
