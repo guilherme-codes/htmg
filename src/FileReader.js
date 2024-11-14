@@ -27,7 +27,7 @@ class FileReader {
      */
   async readLayouts() {
     const directories = await this.#getDirectoriesList()
-    const layoutContents = await this.#processLayoutDirectoryContent(directories)
+    const layoutContents = await this.#processLayoutDirectory(directories)
 
     return Object.fromEntries(layoutContents)
   }
@@ -60,7 +60,7 @@ class FileReader {
      * @param {Array} directories Array of directory entries
      * @returns {Promise<Array>} Array of processed directory contents
      */
-  async #processLayoutDirectoryContent(directories) {
+  async #processLayoutDirectory(directories) {
     const directoryPromises = directories.map(dir => 
       this.#readDirectoryContent(dir)
     )
