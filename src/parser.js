@@ -1,21 +1,15 @@
-
-// Substitui os includes encontrados pelo conteúdo processado
 export function parseFileContent(content, partials, processedIncludes = new Set()) {
-  const matches = findIncludes(content)
-  let processedContent = content
+  const includes = findIncludes(content)
 
-  for (const match of matches) {
-    const [fullMatch, partialName] = match
+  return includes
+    .reduce((processedContent, [fullMatch, partialName]) => {
+      const processedPartial = processPartial(partialName, partials, processedIncludes)
 
-    const processedPartial = processPartial(partialName, partials, processedIncludes)
-
-    processedContent = processedContent.replace(fullMatch, processedPartial)
-  }
-
-  return processedContent 
+      return processedContent.replace(fullMatch, processedPartial)
+    }, content)
 }
 
-// Localiza todos os includes no conteúdo
+
 function findIncludes(content) {
   const includeRegex = /<!--\s*include:\s*(\w+)\s*-->/g
   const matches = []
@@ -28,28 +22,30 @@ function findIncludes(content) {
   return matches
 }
 
-// Processa um partial recursivamente
 function processPartial(partialName, partials, processedIncludes) {
+  validatePartials(partials, partialName, processedIncludes)
   
-  if (processedIncludes.has(partialName)) {
-    console.warn(`Aviso: Include circular detectado para "${partialName}"`)
-    throw Error()
-  }
-
   const partialContent = partials[partialName]
-
-  if (!partialContent) {
-    console.warn(`Aviso: Partial "${partialName}" não encontrado`)
-    throw Error()
-  }
-
   processedIncludes.add(partialName)
 
   return parseFileContent(
     partialContent,
     partials,
-    new Set(processedIncludes) // Cria uma cópia para preservar o estado anterior
+    new Set(processedIncludes)
   )
+}
+
+
+function validatePartials(partials, partialName, processedIncludes) {
+  if (!partials[partialName]) {
+    console.warn(`Aviso: Partial "${partialName}" não encontrado`)
+    throw Error()
+  }
+
+  if (processedIncludes.has(partialName)) {
+    console.warn(`Aviso: Include circular detectado para "${partialName}"`)
+    throw Error()
+  }
 }
 
 

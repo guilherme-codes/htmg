@@ -1,9 +1,8 @@
-import fs from 'fs/promises'
-import path from 'path'
-import { accessPathError, readFileError } from './log/errors/fileSystem.js'
-
 /**
-* Reads all layout files from the base directory and then returns their contents in an organized structure.
+* This module intent to read all layout files from the base directory and then returns 
+* their contents in an organized structure. The return object will be used by the parser 
+* to generate the final HTML content, replacing the includes comments.
+* 
 * e.g. {
 *   layout1: {
 *     index: '...',
@@ -11,10 +10,17 @@ import { accessPathError, readFileError } from './log/errors/fileSystem.js'
 *     footer: '...',
 *  },
 * }
+**/
+
+import fs from 'fs/promises'
+import path from 'path'
+import { accessPathError, readFileError } from './log/errors/fileSystem.js'
+
+/**
+* Reads all layout files from the base directory.
 * @param {string} [basePath='layouts'] Path to folder containing layout files (default: layouts)
 * @returns {Promise<Object>} Layout contents organized by directory and partials.
 */
-
 export async function readLayouts(basePath = 'layouts') {
   await validateBasePath(basePath)
   const directories = await getDirectoriesList(basePath)
