@@ -1,18 +1,7 @@
-// Este módulo processa o conteúdo HTML e substitui os includes pelos respectivos conteúdos
-export function parseFileContent(content, partials, processedIncludes = new Set()) {
-  const { processedContent, hasChanges } = processContent(content, partials, processedIncludes)
-
-  if (hasChanges) {
-    return parseFileContent(processedContent, partials, processedIncludes)
-  }
-
-  return processedContent
-}
 
 // Substitui os includes encontrados pelo conteúdo processado
-function processContent(content, partials, processedIncludes) {
+export function parseFileContent(content, partials, processedIncludes = new Set()) {
   const matches = findIncludes(content)
-  let hasChanges = false
   let processedContent = content
 
   for (const match of matches) {
@@ -20,13 +9,10 @@ function processContent(content, partials, processedIncludes) {
 
     const processedPartial = processPartial(partialName, partials, processedIncludes)
 
-    if (processedPartial) {
-      processedContent = processedContent.replace(fullMatch, processedPartial)
-      hasChanges = true
-    }
+    processedContent = processedContent.replace(fullMatch, processedPartial)
   }
 
-  return { processedContent, hasChanges }
+  return processedContent 
 }
 
 // Localiza todos os includes no conteúdo
@@ -47,14 +33,14 @@ function processPartial(partialName, partials, processedIncludes) {
   
   if (processedIncludes.has(partialName)) {
     console.warn(`Aviso: Include circular detectado para "${partialName}"`)
-    return ''
+    throw Error()
   }
 
   const partialContent = partials[partialName]
 
   if (!partialContent) {
     console.warn(`Aviso: Partial "${partialName}" não encontrado`)
-    return ''
+    throw Error()
   }
 
   processedIncludes.add(partialName)
