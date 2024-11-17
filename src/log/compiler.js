@@ -24,3 +24,30 @@ export function compileLayoutFilesError(layoutName, error) {
     error
   )
 }
+
+export function writeOutputFileError(file, error) {
+  formatError(
+    errorMessages.WRITE_OUTPUT_FILE_ERROR(file),
+    error
+  )
+
+  process.exit(1)
+}
+
+export function insertHtmlIntoLayoutError(layoutName, error) {
+  formatError(
+    errorMessages.INSERT_HTML_INTO_LAYOUT_ERROR(layoutName),
+    error
+  )
+
+  process.exit(1)
+}
+
+export function compileMarkdownFilesError(error) {
+  formatError(
+    errorMessages.COMPILE_MARKDOWN_FILES_ERROR(),
+    error
+  )
+
+  process.exit(1)
+}

@@ -2,6 +2,8 @@ import path from 'path'
 import fs from 'fs/promises'
 import { markdownToHtml } from '../utils/markdown-to-html.js'
 import { outputDir, pagesDir } from '../utils/contants.js'
+import { readDirectoryError, readFileError } from '../log/reader.js'
+import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/compiler.js'
 
 export async function compileMarkdownFiles(layouts) {
   try {
@@ -18,18 +20,21 @@ export async function compileMarkdownFiles(layouts) {
 
     console.log('Todos os arquivos foram processados!')
   } catch (error) {
-    console.error('Erro ao processar arquivos:', error)
+    compileMarkdownFilesError(error)
   }
 }
 
 async function createPage(file, content, layouts) {
-  const htmlContent = markdownToHtml(content)
-  const finalHtml = injectHtmlIntoLayout(htmlContent, layouts.default)
-
-  const outputFilePath = path.join(outputDir, file.replace('.md', '.html'))
-  await writeOutputFile(outputFilePath, finalHtml)
-  console.log(`Arquivo processado: ${outputFilePath}`)
-
+  try {
+    const htmlContent = markdownToHtml(content)
+    const finalHtml = injectHtmlIntoLayout(htmlContent, layouts.default)
+  
+    const outputFilePath = path.join(outputDir, file.replace('.md', '.html'))
+    await writeOutputFile(outputFilePath, finalHtml)
+  } catch (error) {
+    writeOutputFileError(file, error)
+    
+  }
 }
 
 async function ensureOutputDirExists() {
@@ -41,21 +46,39 @@ async function ensureOutputDirExists() {
 }
 
 async function getMarkdownFiles(directory) {
-  const files = await fs.readdir(directory)
-  return files.filter(file => path.extname(file) === '.md')
+  try {
+    const files = await fs.readdir(directory)
+    return files.filter(file => path.extname(file) === '.md')
+  } catch (error) {
+    readDirectoryError(directory, error)
+    throw error
+  }
 }
 
 async function readFileContent(filePath) {
-  return await fs.readFile(filePath, 'utf-8')
+  try {
+    return await fs.readFile(filePath, 'utf-8')
+  } catch (error) {
+    readFileError(filePath, error)
+  }
 }
 
 
 function injectHtmlIntoLayout(htmlContent, layout) {
-  const contentRegex = /<!--\s*page_content\s*-->/
-  
-  return layout.replace(contentRegex, htmlContent)
+  try {
+    const contentRegex = /<!--\s*page_content\s*-->/
+    
+    return layout.replace(contentRegex, htmlContent)
+  } catch (error) {
+    insertHtmlIntoLayoutError(layout, error)
+  }
 }
 
 async function writeOutputFile(filePath, content) {
-  await fs.writeFile(filePath, content, 'utf-8')
+  try {
+    await fs.writeFile(filePath, content, 'utf-8')
+
+  } catch (error) {
+    writeOutputFileError(filePath, error)
+  }
 }
