@@ -8,18 +8,21 @@ Welcome to Static Donkey
 ### TODO
 
 - Add MD file support.
-  - Layout directives.
-  - SEO directives.
-  - Render to. <!-- dk_content -->
-  - sanitize it ??
-  - convert to html.
+  - [] Layout directives.
+  - [] SEO directives.
+  - [] Render to. <!-- page_content -->
+  - [] sanitize it ??
+  - [] convert to html.
 
 - Minify
- - minify html?
- - Purge and minify css?
+ - [] minify html?
+ - [] Purge and minify css?
 
 
-- Extract to Package
-  - add to npm.
-  - build script?
-  - init script?
+- Extract Package
+  - [] add to npm.
+  - [] build script?
+  - [] init script?
+
+- All or Nothing: if the process fail in any step,
+it shoul be interrupted and the dist folder should be deleted.
