@@ -1,3 +1,5 @@
+import { parserFileContentError, parserPartialsError } from './log/parser.js'
+
 /**
  * Parses the content of a file and replaces any includes with their corresponding partials.
  * 
@@ -7,14 +9,20 @@
  * @returns {string} - The processed content with includes replaced by partials.
  */
 export function parseFileContent(content, partials, processedIncludes = new Set()) {
-  const includes = findIncludes(content)
+  try {
+    const includes = findIncludes(content)
 
-  return includes
-    .reduce((processedContent, [fullMatch, partialName]) => {
-      const processedPartial = processPartial(partialName, partials, processedIncludes)
+    return includes
+      .reduce((processedContent, [fullMatch, partialName]) => {
+        const processedPartial = processPartial(partialName, partials, processedIncludes)
 
-      return processedContent.replace(fullMatch, processedPartial)
-    }, content)
+        return processedContent.replace(fullMatch, processedPartial)
+      }, content)
+  } catch (error) {
+    parserFileContentError(content, error)
+
+    throw error
+  }
 }
 
 /**
@@ -31,7 +39,7 @@ function findIncludes(content) {
   while ((match = includeRegex.exec(content)) !== null) {
     matches.push(match)
   }
-
+  
   return matches
 }
 
@@ -44,16 +52,23 @@ function findIncludes(content) {
  * @returns {string} - The parsed content of the partial.
  */
 function processPartial(partialName, partials, processedIncludes) {
-  validatePartials(partials, partialName, processedIncludes)
-  
-  const partialContent = partials[partialName]
-  processedIncludes.add(partialName)
 
-  return parseFileContent(
-    partialContent,
-    partials,
-    new Set(processedIncludes)
-  )
+  try {
+    validatePartials(partials, partialName, processedIncludes)
+    
+    const partialContent = partials[partialName]
+    processedIncludes.add(partialName)
+  
+    return parseFileContent(
+      partialContent,
+      partials,
+      new Set(processedIncludes)
+    )
+  } catch (error) {
+    parserPartialsError(partialName, error)
+
+    throw error
+  }
 }
 
 
