@@ -18,8 +18,10 @@ import {
   accessPathError, 
   readDirectoryContentError, 
   readDirectoryError, 
-  readFileError 
-} from './log/errors/fileSystem.js'
+  readDirectoryFilesError, 
+  readFileError, 
+  readLayoutsError
+} from './log/errors/reader.js'
 
 /**
 * Reads all layout files from the base directory.
@@ -27,13 +29,17 @@ import {
 * @returns {Promise<Object>} Layout contents organized by directory and partials.
 */
 export async function readLayouts(basePath = 'layouts') {
-  await validateBasePath(basePath)
-  const directories = await getDirectoriesList(basePath)
-  const layoutContents = await Promise.all(
-    (directories).map(dir => readDirectoryContent(basePath, dir))
-  )
-
-  return Object.fromEntries(layoutContents)
+  try {
+    await validateBasePath(basePath)
+    const directories = await getDirectoriesList(basePath)
+    const layoutContents = await Promise.all(
+      (directories).map(dir => readDirectoryContent(basePath, dir))
+    )
+  
+    return Object.fromEntries(layoutContents)
+  } catch (error) {
+    readLayoutsError(basePath, error)
+  }
 }
 
 /**
@@ -111,11 +117,15 @@ async function readFileContent(filePath) {
 */
 
 async function readDirectoryFiles(dirPath, files) {
-  const fileContents = await Promise.all(
-    files.map(file => readFileContent(path.join(dirPath, file)))
-  )
-
-  return Object.fromEntries(
-    files.map((file, index) => [path.parse(file).name, fileContents[index]])
-  )
+  try {
+    const fileContents = await Promise.all(
+      files.map(file => readFileContent(path.join(dirPath, file)))
+    )
+  
+    return Object.fromEntries(
+      files.map((file, index) => [path.parse(file).name, fileContents[index]])
+    )
+  } catch (error) {
+    readDirectoryFilesError(dirPath, error)
+  }
 }

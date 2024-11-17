@@ -36,3 +36,21 @@ export function readDirectoryContentError(directory, error) {
 
   process.exit(1)
 }
+
+export function readDirectoryFilesError(directory, error) {
+  formatError(
+    errorMessages.READ_DIRECTORY_FILES_ERROR(directory),
+    error
+  )
+
+  process.exit(1)
+}
+
+export function readLayoutsError(basePath, error) {
+  formatError(
+    errorMessages.READ_LAYOUTS_ERROR(basePath),
+    error
+  )
+
+  process.exit(1)
+}
