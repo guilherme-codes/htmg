@@ -22,13 +22,14 @@ import {
   readFileError, 
   readLayoutsError
 } from '../log/reader.js'
+import { layoutsDir } from '../utils/contants.js'
 
 /**
 * Reads all layout files from the base directory.
 * @param {string} [basePath='layouts'] Path to folder containing layout files (default: layouts)
 * @returns {Promise<Object>} Layout contents organized by directory and partials.
 */
-export async function readLayouts(basePath = 'layouts') {
+export async function readLayouts(basePath = layoutsDir) {
   try {
     await validateBasePath(basePath)
     const directories = await getDirectoriesList(basePath)

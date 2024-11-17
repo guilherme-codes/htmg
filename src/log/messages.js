@@ -14,6 +14,7 @@ const errorMessages = {
   //compiler errors
   COMPILE_LAYOUTS_ERROR: () => 'Error: compiling layouts',
   INDEX_NOT_FOUND_ERROR: (layoutName) => `Error: layout "${layoutName}" does not have an index.html file`,
+  COMPILE_LAYOUT_FILES_ERROR: (layoutName) => `Error: compiling layout files for "${layoutName}"`,
 }
 
 export default errorMessages

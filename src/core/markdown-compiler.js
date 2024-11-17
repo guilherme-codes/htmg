@@ -1,13 +1,9 @@
 import path from 'path'
 import fs from 'fs/promises'
 import { markdownToHtml } from '../utils/markdown-to-html.js'
+import { outputDir, pagesDir } from '../utils/contants.js'
 
-const outputDir = './output'
-const pagesDir = './pages'
-
-
-
-export async function processMarkdownFiles(layouts) {
+export async function compileMarkdownFiles(layouts) {
   try {
     await ensureOutputDirExists()
 
@@ -27,7 +23,7 @@ export async function processMarkdownFiles(layouts) {
 }
 
 async function createPage(file, content, layouts) {
-  const htmlContent = convertMarkdownToHtml(content)
+  const htmlContent = markdownToHtml(content)
   const finalHtml = injectHtmlIntoLayout(htmlContent, layouts.default)
 
   const outputFilePath = path.join(outputDir, file.replace('.md', '.html'))
@@ -53,9 +49,6 @@ async function readFileContent(filePath) {
   return await fs.readFile(filePath, 'utf-8')
 }
 
-function convertMarkdownToHtml(content) {
-  return markdownToHtml(content)
-}
 
 function injectHtmlIntoLayout(htmlContent, layout) {
   const contentRegex = /<!--\s*page_content\s*-->/

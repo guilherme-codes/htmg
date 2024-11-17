@@ -17,3 +17,10 @@ export function indexNotFoundError(layoutName) {
 
   process.exit(1)
 }
+
+export function compileLayoutFilesError(layoutName, error) {
+  formatError(
+    errorMessages.COMPILE_LAYOUT_FILES_ERROR(layoutName),
+    error
+  )
+}
