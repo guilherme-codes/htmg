@@ -9,3 +9,11 @@ export function compileLayoutsError(error) {
 
   process.exit(1)
 }
+
+export function indexNotFoundError(layoutName) {
+  formatError(
+    errorMessages.INDEX_NOT_FOUND_ERROR(layoutName)
+  )
+
+  process.exit(1)
+}

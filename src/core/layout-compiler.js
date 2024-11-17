@@ -1,4 +1,4 @@
-import { compileLayoutsError } from '../log/compiler.js'
+import { compileLayoutsError, indexNotFoundError } from '../log/compiler.js'
 import { parseFileContent } from './parser.js'
 import { readLayouts } from './reader.js'
 
@@ -29,7 +29,7 @@ async function getLayouts() {
 
 function processLayoutFiles(layoutName, files) {
   if (!files.index) {
-    console.warn(`Aviso: Layout "${layoutName}" não possui arquivo index.html`)
+    indexNotFoundError(layoutName)
     return null
   }
 
