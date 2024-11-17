@@ -3,7 +3,7 @@ import errorMessages from './messages.js'
 
 export function compileLayoutsError(error) {
   formatError(
-    errorMessages.COMPILE_LAYOUTS_ERROR(),
+    errorMessages.BUILD_LAYOUTS_ERROR(),
     error
   )
 
@@ -20,7 +20,7 @@ export function indexNotFoundError(layoutName) {
 
 export function compileLayoutFilesError(layoutName, error) {
   formatError(
-    errorMessages.COMPILE_LAYOUT_FILES_ERROR(layoutName),
+    errorMessages.BUILD_LAYOUT_FILES_ERROR(layoutName),
     error
   )
 }
@@ -45,7 +45,7 @@ export function insertHtmlIntoLayoutError(layoutName, error) {
 
 export function compileMarkdownFilesError(error) {
   formatError(
-    errorMessages.COMPILE_MARKDOWN_FILES_ERROR(),
+    errorMessages.BUILD_MARKDOWN_FILES_ERROR(),
     error
   )
 

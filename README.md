@@ -25,15 +25,15 @@ Welcome to Static Donkey
   - [ ] sanitize it ?
   - [ ] minify html?
   - [ ] Purge and minify css?
-  - [ ] add to npmjs.com.
+  - [ ] dev script?
+    - provides an dev server with hot reload?
   - [ ] build script?
   - [ ] init script?
+  - [ ] All or Nothing operation: if the process fail in any step,
+        it should be interrupted and the output folder should be deleted.
+  - [ ] add to npmjs.com.
     - create pages folder.
     - create layouts folder.
     - create assets (css, images, fonts) folder.
     - create js folder.
-  - [ ] dev script?
-    - provides an dev server with hot reload?
-  - [ ] All or Nothing operation: if the process fail in any step,
-        it should be interrupted and the output folder should be deleted.
 

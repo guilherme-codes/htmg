@@ -1,15 +1,15 @@
-import { compileLayoutFilesError, compileLayoutsError, indexNotFoundError } from '../log/compiler.js'
+import { compileLayoutFilesError, compileLayoutsError, indexNotFoundError } from '../log/builder.js'
 import { parseFileContent } from './parser.js'
 import { readLayouts } from './reader.js'
 
 /**
- * Compiles layouts by processing layout files and returning the condensed final result.
+ * Build layouts by processing layout files and returning the condensed final result.
  * This result will be used to generate the final HTML content using the md pages.
  * 
  * @returns {Promise<Object>} A promise that resolves to an object containing the layout 
  * name as key and the html content its value.
  */
-export async function compileLayouts() {
+export async function builLayouts() {
   const parsedLayouts = {}
 
   try {
