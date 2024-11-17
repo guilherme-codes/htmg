@@ -23,13 +23,8 @@ export async function compileLayouts() {
 
 
 async function getLayouts() {
-  try {
-    const layouts = await readLayouts()
-    return layouts
-  } catch (error) {
-    console.error('Erro ao ler layouts:', error)
-    throw error
-  }
+  const layouts = await readLayouts()
+  return layouts
 }
 
 function processLayoutFiles(layoutName, files) {
