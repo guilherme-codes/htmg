@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs/promises'
-import { markdownToHtml } from './utils/markdown-to-html.js'
+import { markdownToHtml } from '../utils/markdown-to-html.js'
 
 const outputDir = './output'
 const pagesDir = './pages'

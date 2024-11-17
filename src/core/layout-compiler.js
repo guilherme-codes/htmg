@@ -1,4 +1,4 @@
-import { compileLayoutsError } from './log/compiler.js'
+import { compileLayoutsError } from '../log/compiler.js'
 import { parseFileContent } from './parser.js'
 import { readLayouts } from './reader.js'
 

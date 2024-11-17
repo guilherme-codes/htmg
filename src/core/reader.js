@@ -21,7 +21,7 @@ import {
   readDirectoryFilesError, 
   readFileError, 
   readLayoutsError
-} from './log/reader.js'
+} from '../log/reader.js'
 
 /**
 * Reads all layout files from the base directory.
