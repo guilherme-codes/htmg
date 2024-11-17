@@ -8,8 +8,7 @@ Welcome to Static Donkey
 ### TODO
 
   - [x] render partials 
-  - [x] Render to. <!-- page_content -->
-  - [x] convert md to html.
+  - [x] render md content.
   - [x] treat errors.
   - [] treat info and success messages.
   - [] add docs and doctrine.
