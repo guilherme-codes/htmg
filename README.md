@@ -7,15 +7,15 @@ Welcome to Static Donkey
 
 ### TODO
 
-  - [ x ] render partials 
-  - [ x ] Render to. <!-- page_content -->
-  - [ x ] convert md to html.
+  - [x] render partials 
+  - [x] Render to. <!-- page_content -->
+  - [x] convert md to html.
   - [ ] copy assets to the output folders.
   - [ ] dynamic layouts.
   - [ ] insert title from .md header.
   - [ ] SEO directives.
-  = [ ] RSS Feed.
-  - [ ] sanitize it ??
+  - [ ] RSS Feed.
+  - [ ] sanitize it ?
   - [ ] Generate sitemap.
   - [ ] minify html?
   - [ ] Purge and minify css?
