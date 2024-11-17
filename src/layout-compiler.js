@@ -1,3 +1,4 @@
+import { compileLayoutsError } from './log/compiler.js'
 import { parseFileContent } from './parser.js'
 import { readLayouts } from './reader.js'
 
@@ -16,7 +17,7 @@ export async function compileLayouts() {
     return parsedLayouts
 
   } catch (error) {
-    console.error('Erro ao compilar layouts:', error)
+    compileLayoutsError(error)
   } 
 }
 

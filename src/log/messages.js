@@ -10,6 +10,9 @@ const errorMessages = {
   //parser errors
   PARSER_FILE_CONTENT_ERROR: () => 'Error on parsing file content',
   PARSER_PARTIALS_ERROR: (partialName) => `Error on parsing partial: ${partialName}`,
+
+  //compiler errors
+  COMPILE_LAYOUTS_ERROR: () => 'Error on compiling layouts',
 }
 
 export default errorMessages

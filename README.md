@@ -8,11 +8,14 @@ Welcome to Static Donkey
 ### TODO
 
 - Add MD file support.
-  - [] Layout directives.
+  - [ x ] Render to. <!-- page_content -->
+  - [ x ] convert to html.
+  - [] dynamic layouts.
+  - [] insert title from .md.
   - [] SEO directives.
-  - [] Render to. <!-- page_content -->
   - [] sanitize it ??
-  - [] convert to html.
+  - [] copy assets to the output folders.
+  - [] Generate sitemap.
 
 - Minify
  - [] minify html?
@@ -24,5 +27,5 @@ Welcome to Static Donkey
   - [] build script?
   - [] init script?
 
-- All or Nothing: if the process fail in any step,
-it shoul be interrupted and the dist folder should be deleted.
+- All or Nothing operation: if the process fail in any step,
+it should be interrupted and the dist folder should be deleted.

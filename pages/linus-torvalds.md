@@ -1,3 +1,15 @@
+---
+layout: posts
+title: linus post
+meta-description: in this article you will know more about linus
+meta-locale: auto-generated
+meta-type: article
+meta-title: Know more about linus!
+meta-url: auto-generated (should we use env var?)
+meta-name: My site name
+meta-modified-time: auto-generated 
+---
+
 # Linus Torvalds: The Father of Linux and Git
 
 **Author:** Tech Enthusiast  
