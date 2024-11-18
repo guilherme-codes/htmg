@@ -1,8 +1,8 @@
-import { builLayouts } from './core/layout-builder.js'
-import { buildMarkdownFiles } from './core/markdown-builder.js'
+import { buildLayouts } from './core/layouts.js'
+import { buildPages } from './core/pages.js'
 
 (async function build() {
-  const layoutsContent = await builLayouts()
+  const layoutsContent = await buildLayouts()
   
-  await buildMarkdownFiles(layoutsContent)
+  await buildPages(layoutsContent)
 })()

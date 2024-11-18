@@ -22,6 +22,7 @@ Welcome to Static Donkey
   - [ ] RSS Feed.
   - [ ] More layouts directives?
     - insert title in any place eg:  `<h1> <!-- layout_title --> </h1>`
+  - [ ] use streams to read files.
   - [ ] sanitize it ?
   - [ ] minify html?
   - [ ] Purge and minify css?

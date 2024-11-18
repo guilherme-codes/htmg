@@ -1,4 +1,4 @@
-import { compileLayoutFilesError, compileLayoutsError, indexNotFoundError } from '../log/builder.js'
+import { compileLayoutFilesError, compileLayoutsError, indexNotFoundError } from '../log/build.js'
 import { parseFileContent } from './parser.js'
 import { readLayouts } from './reader.js'
 
@@ -9,7 +9,7 @@ import { readLayouts } from './reader.js'
  * @returns {Promise<Object>} A promise that resolves to an object containing the layout 
  * name as key and the html content its value.
  */
-export async function builLayouts() {
+export async function buildLayouts() {
   const parsedLayouts = {}
 
   try {

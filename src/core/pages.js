@@ -3,15 +3,15 @@ import fs from 'fs/promises'
 import { markdownToHtml } from '../utils/markdown-to-html.js'
 import { outputDir, pagesDir } from '../utils/contants.js'
 import { readDirectoryError, readFileError } from '../log/reader.js'
-import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/builder.js'
+import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/build.js'
 
 /**
- * Build markdown files and creates pages using the provided layouts.
+ * Convert markdown pages to html files and add its content to the provided layouts.
  * 
  * @param {Object} layouts - An object where the key is the layout name and the value is the layout content.
  * @returns {Promise<void>} - A promise that resolves when all files are processed.
  */
-export async function buildMarkdownFiles(layouts) {
+export async function buildPages(layouts) {
   try {
     await ensureOutputDirExists()
 
