@@ -23,6 +23,7 @@ Welcome to Static Donkey
   - [ ] More layouts directives?
     - insert title in any place eg:  `<h1> <!-- layout_title --> </h1>`
   - [ ] use streams to read files.
+  - [ ] use pages as start point and only process and store a layout when found a page that is using it.
   - [ ] sanitize it ?
   - [ ] minify html?
   - [ ] Purge and minify css?
