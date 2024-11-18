@@ -38,3 +38,4 @@ Welcome to Static Donkey
     - create assets (css, images, fonts) folder.
     - create js folder.
 
+

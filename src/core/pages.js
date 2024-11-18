@@ -1,8 +1,11 @@
 import path from 'path'
-import fs from 'fs/promises'
+import fs from 'fs'
+import { createReadStream, createWriteStream } from 'fs'
+import { pipeline } from 'stream/promises'
+import { Transform } from 'stream'
 import { markdownToHtml } from '../utils/markdown-to-html.js'
 import { outputDir, pagesDir } from '../utils/contants.js'
-import { readDirectoryError, readFileError } from '../log/reader.js'
+import { readDirectoryError } from '../log/reader.js'
 import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/build.js'
 
 /**
@@ -14,14 +17,10 @@ import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileEr
 export async function buildPages(layouts) {
   try {
     await ensureOutputDirExists()
-
     const files = await getMarkdownFiles(pagesDir)
 
     for (const file of files) {
-      const filePath = path.join(pagesDir, file)
-      const content = await readFileContent(filePath)
-
-      await createPage(file, content, layouts)
+      await processFile(file, layouts)
     }
 
     console.log('Todos os arquivos foram processados!')
@@ -30,30 +29,63 @@ export async function buildPages(layouts) {
   }
 }
 
-async function createPage(file, content, layouts) {
+/**
+ * Process a single markdown file and convert it to HTML
+ * 
+ * @param {string} file - The markdown file name
+ * @param {Object} layouts - Available layouts
+ * @returns {Promise<void>}
+ */
+async function processFile(file, layouts) {
+  const inputPath = path.join(pagesDir, file)
+  const outputPath = path.join(outputDir, file.replace('.md', '.html'))
+
   try {
-    const htmlContent = markdownToHtml(content)
-    const finalHtml = injectHtmlIntoLayout(htmlContent, layouts.default)
-  
-    const outputFilePath = path.join(outputDir, file.replace('.md', '.html'))
-    await writeOutputFile(outputFilePath, finalHtml)
+    const markdownTransform = createMarkdownTransform(layouts.default)
+    
+    await pipeline(
+      createReadStream(inputPath, 'utf-8'),
+      markdownTransform,
+      createWriteStream(outputPath, 'utf-8')
+    )
   } catch (error) {
     writeOutputFileError(file, error)
-    
   }
 }
 
+/**
+ * Creates a transform stream that converts markdown to HTML and injects it into a layout
+ * 
+ * @param {string} layout - The layout template to inject the HTML into
+ * @returns {Transform} A transform stream that processes markdown to HTML
+ */
+function createMarkdownTransform(layout) {
+  return new Transform({
+    transform(chunk, _, callback) {
+      try {
+        const markdown = chunk.toString()
+        const html = markdownToHtml(markdown)
+        const finalHtml = injectHtmlIntoLayout(html, layout)
+        callback(null, finalHtml)
+      } catch (error) {
+        callback(error)
+      }
+    }
+  })
+}
+
+
 async function ensureOutputDirExists() {
   try {
-    await fs.access(outputDir) 
+    await fs.promises.access(outputDir)
   } catch {
-    await fs.mkdir(outputDir, { recursive: true }) 
+    await fs.promises.mkdir(outputDir, { recursive: true })
   }
 }
 
 async function getMarkdownFiles(directory) {
   try {
-    const files = await fs.readdir(directory)
+    const files = await fs.promises.readdir(directory)
     return files.filter(file => path.extname(file) === '.md')
   } catch (error) {
     readDirectoryError(directory, error)
@@ -61,30 +93,11 @@ async function getMarkdownFiles(directory) {
   }
 }
 
-async function readFileContent(filePath) {
-  try {
-    return await fs.readFile(filePath, 'utf-8')
-  } catch (error) {
-    readFileError(filePath, error)
-  }
-}
-
-
 function injectHtmlIntoLayout(htmlContent, layout) {
   try {
     const contentRegex = /<!--\s*page_content\s*-->/
-    
     return layout.replace(contentRegex, htmlContent)
   } catch (error) {
     insertHtmlIntoLayoutError(layout, error)
-  }
-}
-
-async function writeOutputFile(filePath, content) {
-  try {
-    await fs.writeFile(filePath, content, 'utf-8')
-
-  } catch (error) {
-    writeOutputFileError(filePath, error)
   }
 }
