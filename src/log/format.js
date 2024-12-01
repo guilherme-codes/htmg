@@ -28,7 +28,7 @@ export function formatInfo(customMessage) {
   let formattedMessage = chalk.whiteBright(customMessage)
 
   if (process.stdout.isTTY) {
-    formattedMessage = `⚙️ ${formattedMessage}`
+    formattedMessage = `🔄   ${formattedMessage}`
   }
 
   console.log(formattedMessage)
