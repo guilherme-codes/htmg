@@ -1,4 +1,4 @@
-import {formatError, formatInfo} from './format.js'
+import {formatError, formatInfo, formatSuccess} from './format.js'
 import messages from './messages.js'
 
 export function compileLayoutsError(error) {
@@ -53,5 +53,18 @@ export function compileMarkdownFilesError(error) {
 }
 
 export function buildSuccess() {
-  formatInfo(messages.BUILD_SUCCESS())
+  formatSuccess(messages.FILES_BUILD_SUCCESS())
 }
+
+export function buildingLayout(layoutName) {
+  formatInfo(messages.BUILDING_LAYOUT(layoutName))
+}
+
+export function allLayoutsBuilt() {
+  formatSuccess(messages.ALL_LAYOUTS_BUILT())
+}
+
+export function creatingFile(file) {
+  formatInfo(messages.CREATING_FILE(file))
+}
+

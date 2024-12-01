@@ -6,7 +6,7 @@ import { Transform } from 'stream'
 import { extractMarkdownMetadata, markdownToHtml, injectMarkdownMetadata } from '../utils/markdown.js'
 import { outputDir, pagesDir } from '../utils/contants.js'
 import { readDirectoryError } from '../log/reader.js'
-import { buildSuccess, compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/build.js'
+import * as log from '../log/index.js'
 import { pageContentRegex } from '../utils/regex.js'
 import { minifyHtml } from '../utils/minify.js'
 
@@ -25,9 +25,9 @@ export async function buildPages(layouts) {
       await processFile(file, layouts)
     }
 
-    buildSuccess()
+    log.buildSuccess()
   } catch (error) {
-    compileMarkdownFilesError(error)
+    log.compileMarkdownFilesError(error)
   }
 }
 
@@ -43,16 +43,22 @@ async function processFile(file, layouts) {
   const outputPath = path.join(outputDir, file.replace('.md', '.html'))
 
   try {
+    log.parsingMarkdownFiles(file)
     const markdownTransform = createMarkdownTransform(layouts)
     
     await pipeline(
       createReadStream(inputPath, 'utf-8'),
       markdownTransform,
-      createWriteStream(outputPath, 'utf-8')
+      writeFile(outputPath)
     )
   } catch (error) {
-    writeOutputFileError(file, error)
+    log.writeOutputFileError(file, error)
   }
+}
+
+function writeFile (output) {
+  log.creatingFile(output)
+  return createWriteStream(output, 'utf-8')
 }
 
 /**
@@ -129,7 +135,7 @@ function injectHtmlIntoLayout(htmlContent, layout, metadata) {
 
     return layoutContent.replace(pageContentRegex, htmlContent)
   } catch (error) {
-    insertHtmlIntoLayoutError(layout, error)
+    log.insertHtmlIntoLayoutError(layout, error)
     throw error
   }
 }

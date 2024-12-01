@@ -1,4 +1,4 @@
-import { compileLayoutFilesError, compileLayoutsError, indexNotFoundError } from '../log/build.js'
+import * as log from '../log/build.js'
 import { parseFileContent } from './parser.js'
 import { readLayouts } from './reader.js'
 
@@ -24,8 +24,10 @@ export async function buildLayouts() {
     return parsedLayouts
 
   } catch (error) {
-    compileLayoutsError(error)
-  } 
+    log.compileLayoutsError(error)
+  } finally {
+    log.allLayoutsBuilt()
+  }
 }
 
 
@@ -38,13 +40,15 @@ export async function buildLayouts() {
  */
 function processLayoutFiles(layoutName, files) {
   if (!files.index) {
-    indexNotFoundError(layoutName)
+    log.indexNotFoundError(layoutName)
   }
 
   try {
+    log.buildingLayout(layoutName)
+
     const compiledContent = parseFileContent(files.index, files)
     return compiledContent
   } catch (error) {
-    compileLayoutFilesError(layoutName, error)
+    log.compileLayoutFilesError(layoutName, error)
   }
 }

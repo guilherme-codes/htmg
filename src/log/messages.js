@@ -22,8 +22,12 @@ const logMessages = {
   WRITE_OUTPUT_FILE_ERROR: (file) => `Error: creating page ${file}`,
   INSERT_HTML_INTO_LAYOUT_ERROR: (layoutName) => `Error: inserting HTML into layout "${layoutName}"`,
 
-  // success alerts
-  BUILD_SUCCESS: () => 'All files built successfully',
+  // success and info alerts
+  FILES_BUILD_SUCCESS: () => 'All files built successfully!',
+  BUILDING_LAYOUT: (layoutName) => `Building ${layoutName} layout`,
+  ALL_LAYOUTS_BUILT: () => 'All layouts built successfully!',
+  PARSING_MARKDOWN_FILES: (file) => `Parsing markdown file: ${file}`,
+  CREATING_FILE: (file) => `Creating file: ${file}`,
 }
 
 export default logMessages

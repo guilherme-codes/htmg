@@ -1,4 +1,4 @@
-import {formatError} from './format.js'
+import {formatError, formatInfo} from './format.js'
 import messages from './messages.js'
 
 export function parserFileContentError(directory, error) {
@@ -34,4 +34,10 @@ export function parserCircularDependencyError(partialName) {
   )
 
   process.exit(1)
+}
+
+export function parsingMarkdownFiles(file) {
+  formatInfo(
+    messages.PARSING_MARKDOWN_FILES(file),
+  )
 }

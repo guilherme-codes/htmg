@@ -1,5 +1,4 @@
 import { minify } from 'html-minifier'
-
 /**
  * Minify HTML content
  * 

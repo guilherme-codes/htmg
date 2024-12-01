@@ -8,7 +8,6 @@ export function formatError(customMessage, error) {
   }
 
   console.log(formattedMessage)
-  console.log('\n')
 
 
   console.log(chalk.gray(error.stack))
@@ -29,9 +28,8 @@ export function formatInfo(customMessage) {
   let formattedMessage = chalk.whiteBright(customMessage)
 
   if (process.stdout.isTTY) {
-    formattedMessage = `✅ ${formattedMessage}`
+    formattedMessage = `⚙️ ${formattedMessage}`
   }
 
   console.log(formattedMessage)
-  console.log('\n')
 }
