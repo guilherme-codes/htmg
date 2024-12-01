@@ -10,7 +10,9 @@ const converter = new Showdown.Converter()
  * @returns {string} The converted HTML content.
  */
 export function markdownToHtml(content) {
-  return converter.makeHtml(content)
+  return converter.makeHtml(
+    content.replace(markdownHeaderRegex, '')
+  )
 }
 
 export function extractMarkdownMetadata(markdown) {

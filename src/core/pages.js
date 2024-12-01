@@ -7,6 +7,7 @@ import { extractMarkdownMetadata, markdownToHtml, injectMarkdownMetadata } from 
 import { outputDir, pagesDir } from '../utils/contants.js'
 import { readDirectoryError } from '../log/reader.js'
 import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/build.js'
+import { pageContentRegex } from '../utils/regex.js'
 
 /**
  * Convert markdown pages to html files and add its content to the provided layouts.
@@ -41,7 +42,7 @@ async function processFile(file, layouts) {
   const outputPath = path.join(outputDir, file.replace('.md', '.html'))
 
   try {
-    const markdownTransform = createMarkdownTransform(layouts.default)
+    const markdownTransform = createMarkdownTransform(layouts)
     
     await pipeline(
       createReadStream(inputPath, 'utf-8'),
@@ -56,17 +57,19 @@ async function processFile(file, layouts) {
 /**
  * Creates a transform stream that converts markdown to HTML and injects it into a layout
  * 
- * @param {string} layout - The layout template to inject the HTML into
+ * @param {Object} layouts - The rendered layout content
  * @returns {Transform} A transform stream that processes markdown to HTML
  */
-function createMarkdownTransform(layout) {
+function createMarkdownTransform(layouts) {
+  
   return new Transform({
     transform(chunk, _, callback) {
       try {
         const markdown = chunk.toString()
         const metadata = extractMarkdownMetadata(markdown)
         const html = markdownToHtml(markdown)
-        const finalHtml = injectHtmlIntoLayout(html, layout, metadata)
+        const pageLayout =  metadata?.layout ? layouts[metadata.layout] : layouts.default
+        const finalHtml = injectHtmlIntoLayout(html, pageLayout, metadata)
         
         callback(null, finalHtml)
       } catch (error) {
@@ -97,10 +100,9 @@ async function getMarkdownFiles(directory) {
 
 function injectHtmlIntoLayout(htmlContent, layout, metadata) {
   try {
-    const contentRegex = /<!--\s*page_content\s*-->/
     const layoutContent = injectMarkdownMetadata(layout, metadata)
 
-    return layoutContent.replace(contentRegex, htmlContent)
+    return layoutContent.replace(pageContentRegex, htmlContent)
   } catch (error) {
     insertHtmlIntoLayoutError(layout, error)
   }

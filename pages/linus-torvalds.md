@@ -1,4 +1,4 @@
---- 
+<!-- 
 layout: default
 title: linus post
 meta-description: in this article you will know more about linus
@@ -8,26 +8,23 @@ meta-title: Know more about linus!
 meta-url: auto-generated (should we use env var?)
 meta-name: My site name
 meta-modified-time: auto-generated 
----
+-->
 
 # Linus Torvalds: The Father of Linux and Git
 
 **Author:** Tech Enthusiast  
 **Date:** November 16, 2024  
 
----
 
 ## Introduction
 
 Linus Torvalds is a name synonymous with open-source innovation and modern computing. As the creator of the Linux kernel and the Git version control system, Torvalds has left an indelible mark on the technology landscape. His work forms the foundation of countless systems, from Android smartphones to supercomputers, making him one of the most influential figures in tech history.
 
----
 
 ## Early Life
 
 Born on **December 28, 1969**, in Helsinki, Finland, Linus Benedict Torvalds showed an early interest in technology and programming. He pursued computer science at the University of Helsinki, where he began his journey into software development.
 
----
 
 ## The Birth of Linux
 
@@ -41,7 +38,6 @@ Linux quickly gained traction among developers and enthusiasts, who contributed 
 - **Smartphones** (Android is based on Linux).  
 - **Supercomputers** (all top 500 supercomputers use Linux).  
 
----
 
 ## Git: Revolutionizing Version Control
 
@@ -53,7 +49,6 @@ In **2005**, Linus created Git to manage the development of the Linux kernel. Di
 
 Git is now the de facto version control system for developers worldwide, underpinning platforms like GitHub, GitLab, and Bitbucket.
 
----
 
 ## Legacy and Influence
 
@@ -61,18 +56,18 @@ Linus Torvalds' contributions have reshaped the technology world. His leadership
 
 Today, Torvalds continues to oversee Linux kernel development, maintaining its growth and stability. His pragmatic, no-nonsense approach to software development serves as a guiding principle for the tech community.
 
----
+
 
 ## Fun Fact
 
 Despite his monumental contributions, Torvalds describes himself as an "engineer, not a visionary." He prefers solving practical problems to crafting grand theories, making his achievements even more remarkable.
 
----
+
 
 **"Talk is cheap. Show me the code."**  
 — Linus Torvalds  
 
----
+
 
 ## References
 

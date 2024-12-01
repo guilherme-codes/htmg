@@ -1,7 +1,7 @@
---- 
+<!-- 
 layout: posts
 title: first post
----
+-->
 
 # Introduction to Markdown
 
@@ -26,7 +26,6 @@ Here are some basic examples of Markdown usage:
 
 ### Headers
 
-```markdown
 # Level 1 Header
 ## Level 2 Header
 ### Level 3 Header
