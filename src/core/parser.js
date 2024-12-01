@@ -1,4 +1,4 @@
-import { parserFileContentError, parserPartialsError } from '../log/parser.js'
+import { parserCircularDependencyError, parserFileContentError, parserPartialNotFound, parserPartialsError } from '../log/parser.js'
 /**
  * Parses the content of a file and replaces any includes with their corresponding partials.
  * 
@@ -81,12 +81,12 @@ function processPartial(partialName, partials, processedIncludes) {
  */
 function validatePartials(partials, partialName, processedIncludes) {
   if (!partials[partialName]) {
-    console.warn(`Aviso: Partial "${partialName}" não encontrado`)
+    parserPartialNotFound(partialName)
     throw Error()
   }
 
   if (processedIncludes.has(partialName)) {
-    console.warn(`Aviso: Include circular detectado para "${partialName}"`)
+    parserCircularDependencyError(partialName)
     throw Error()
   }
 }

@@ -6,7 +6,7 @@ import { Transform } from 'stream'
 import { extractMarkdownMetadata, markdownToHtml, injectMarkdownMetadata } from '../utils/markdown.js'
 import { outputDir, pagesDir } from '../utils/contants.js'
 import { readDirectoryError } from '../log/reader.js'
-import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/build.js'
+import { buildSuccess, compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/build.js'
 import { pageContentRegex } from '../utils/regex.js'
 import { minifyHtml } from '../utils/minify.js'
 
@@ -25,7 +25,7 @@ export async function buildPages(layouts) {
       await processFile(file, layouts)
     }
 
-    console.log('Todos os arquivos foram processados!')
+    buildSuccess()
   } catch (error) {
     compileMarkdownFilesError(error)
   }

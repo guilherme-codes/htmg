@@ -1,9 +1,9 @@
-import formatError from './format.js'
-import errorMessages from './messages.js'
+import {formatError} from './format.js'
+import messages from './messages.js'
 
 export function parserFileContentError(directory, error) {
   formatError(
-    errorMessages.PARSER_FILE_CONTENT_ERROR(),
+    messages.PARSER_FILE_CONTENT_ERROR(),
     error
   )
 
@@ -12,8 +12,25 @@ export function parserFileContentError(directory, error) {
 
 export function parserPartialsError(partialName, error) {
   formatError(
-    errorMessages.PARSER_PARTIALS_ERROR(partialName),
+    messages.PARSER_PARTIALS_ERROR(partialName),
     error
+  )
+
+  process.exit(1)
+}
+
+
+export function parserPartialNotFound(partialName) {
+  formatError(
+    messages.PARSER_PARTIAL_NOT_FOUND(partialName)
+  )
+
+  process.exit(1)
+}
+
+export function parserCircularDependencyError(partialName) {
+  formatError(
+    messages.PARSER_CIRCULAR_DEPENDENCY_ERROR(partialName)
   )
 
   process.exit(1)

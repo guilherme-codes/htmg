@@ -1,9 +1,9 @@
-import errorMessages from './messages.js'
-import formatError from './format.js'
+import messages from './messages.js'
+import {formatError} from './format.js'
 
 export function accessPathError(path, error) {
   formatError(
-    errorMessages.ACCESS_PATH_ERROR(path),
+    messages.ACCESS_PATH_ERROR(path),
     error
   )
 
@@ -12,7 +12,7 @@ export function accessPathError(path, error) {
 
 export function readFileError(file, error) {
   formatError(
-    errorMessages.READ_FILE_ERROR(file),
+    messages.READ_FILE_ERROR(file),
     error
   )
   
@@ -21,7 +21,7 @@ export function readFileError(file, error) {
 
 export function readDirectoryError(directory, error) {
   formatError(
-    errorMessages.READ_DIRECTORY_ERROR(directory),
+    messages.READ_DIRECTORY_ERROR(directory),
     error
   )
 
@@ -30,7 +30,7 @@ export function readDirectoryError(directory, error) {
 
 export function readDirectoryContentError(directory, error) {
   formatError(
-    errorMessages.READ_DIRECTORY_CONTENT_ERROR(directory),
+    messages.READ_DIRECTORY_CONTENT_ERROR(directory),
     error
   )
 
@@ -39,7 +39,7 @@ export function readDirectoryContentError(directory, error) {
 
 export function readDirectoryFilesError(directory, error) {
   formatError(
-    errorMessages.READ_DIRECTORY_FILES_ERROR(directory),
+    messages.READ_DIRECTORY_FILES_ERROR(directory),
     error
   )
 
@@ -48,7 +48,7 @@ export function readDirectoryFilesError(directory, error) {
 
 export function readLayoutsError(basePath, error) {
   formatError(
-    errorMessages.READ_LAYOUTS_ERROR(basePath),
+    messages.READ_LAYOUTS_ERROR(basePath),
     error
   )
 

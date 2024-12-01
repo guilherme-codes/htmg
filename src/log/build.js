@@ -1,9 +1,9 @@
-import formatError from './format.js'
-import errorMessages from './messages.js'
+import {formatError, formatInfo} from './format.js'
+import messages from './messages.js'
 
 export function compileLayoutsError(error) {
   formatError(
-    errorMessages.BUILD_LAYOUTS_ERROR(),
+    messages.BUILD_LAYOUTS_ERROR(),
     error
   )
 
@@ -12,7 +12,7 @@ export function compileLayoutsError(error) {
 
 export function indexNotFoundError(layoutName) {
   formatError(
-    errorMessages.INDEX_NOT_FOUND_ERROR(layoutName)
+    messages.INDEX_NOT_FOUND_ERROR(layoutName)
   )
 
   process.exit(1)
@@ -20,14 +20,14 @@ export function indexNotFoundError(layoutName) {
 
 export function compileLayoutFilesError(layoutName, error) {
   formatError(
-    errorMessages.BUILD_LAYOUT_FILES_ERROR(layoutName),
+    messages.BUILD_LAYOUT_FILES_ERROR(layoutName),
     error
   )
 }
 
 export function writeOutputFileError(file, error) {
   formatError(
-    errorMessages.WRITE_OUTPUT_FILE_ERROR(file),
+    messages.WRITE_OUTPUT_FILE_ERROR(file),
     error
   )
 
@@ -36,7 +36,7 @@ export function writeOutputFileError(file, error) {
 
 export function insertHtmlIntoLayoutError(layoutName, error) {
   formatError(
-    errorMessages.INSERT_HTML_INTO_LAYOUT_ERROR(layoutName),
+    messages.INSERT_HTML_INTO_LAYOUT_ERROR(layoutName),
     error
   )
 
@@ -45,9 +45,13 @@ export function insertHtmlIntoLayoutError(layoutName, error) {
 
 export function compileMarkdownFilesError(error) {
   formatError(
-    errorMessages.BUILD_MARKDOWN_FILES_ERROR(),
+    messages.BUILD_MARKDOWN_FILES_ERROR(),
     error
   )
 
   process.exit(1)
+}
+
+export function buildSuccess() {
+  formatInfo(messages.BUILD_SUCCESS())
 }

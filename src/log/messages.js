@@ -1,4 +1,4 @@
-const errorMessages = {
+const logMessages = {
   // read errors
   ACCESS_PATH_ERROR: (path) => `Error: accessing path: ${path}`,
   READ_FILE_ERROR: (file) => `Error: reading file: ${file}`,
@@ -10,7 +10,9 @@ const errorMessages = {
   
   //parser errors
   PARSER_FILE_CONTENT_ERROR: () => 'Error: parsing file content',
-  PARSER_PARTIALS_ERROR: (partialName) => `Error: parsing partial: ${partialName}`,
+  PARSER_PARTIALS_ERROR: (partialName) => `Error: parsing partial ${partialName}`,
+  PARSER_PARTIAL_NOT_FOUND: (partialName) => `Error: partial not found ${partialName}`,
+  PARSER_CIRCULAR_DEPENDENCY_ERROR: (partialName) => `Error: circular dependency found in partial ${partialName}`,
 
   // build errors
   BUILD_LAYOUTS_ERROR: () => 'Error: compiling layouts',
@@ -19,6 +21,9 @@ const errorMessages = {
   BUILD_LAYOUT_FILES_ERROR: (layoutName) => `Error: compiling layout files for "${layoutName}"`,
   WRITE_OUTPUT_FILE_ERROR: (file) => `Error: creating page ${file}`,
   INSERT_HTML_INTO_LAYOUT_ERROR: (layoutName) => `Error: inserting HTML into layout "${layoutName}"`,
+
+  // success alerts
+  BUILD_SUCCESS: () => 'All files built successfully',
 }
 
-export default errorMessages
+export default logMessages
