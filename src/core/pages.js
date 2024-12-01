@@ -8,6 +8,7 @@ import { outputDir, pagesDir } from '../utils/contants.js'
 import { readDirectoryError } from '../log/reader.js'
 import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/build.js'
 import { pageContentRegex } from '../utils/regex.js'
+import { minifyHtml } from '../utils/minify.js'
 
 /**
  * Convert markdown pages to html files and add its content to the provided layouts.
@@ -70,8 +71,9 @@ function createMarkdownTransform(layouts) {
         const html = markdownToHtml(markdown)
         const pageLayout =  metadata?.layout ? layouts[metadata.layout] : layouts.default
         const finalHtml = injectHtmlIntoLayout(html, pageLayout, metadata)
-        
-        callback(null, finalHtml)
+        const minifiedHtml = minifyHtml(finalHtml)
+
+        callback(null, minifiedHtml)
       } catch (error) {
         callback(error)
       }

@@ -1,5 +1,4 @@
 import { parserFileContentError, parserPartialsError } from '../log/parser.js'
-
 /**
  * Parses the content of a file and replaces any includes with their corresponding partials.
  * 
