@@ -71,6 +71,7 @@ function createMarkdownTransform(layouts) {
         const html = markdownToHtml(markdown)
         const pageLayout =  metadata?.layout ? layouts[metadata.layout] : layouts.default
         const finalHtml = injectHtmlIntoLayout(html, pageLayout, metadata)
+
         const minifiedHtml = minifyHtml(finalHtml)
 
         callback(null, minifiedHtml)
@@ -82,6 +83,12 @@ function createMarkdownTransform(layouts) {
 }
 
 
+/**
+ * Ensures that the output directory exists.
+ * If the directory doesn't exist, it creates it recursively.
+ *
+ * @returns {Promise<void>} A promise that resolves when the output directory is ensured to exist.
+ */
 async function ensureOutputDirExists() {
   try {
     await fs.promises.access(outputDir)
@@ -90,6 +97,13 @@ async function ensureOutputDirExists() {
   }
 }
 
+/**
+ * Retrieves an array of markdown files from the specified directory.
+ *
+ * @param {string} directory - The directory path to search for markdown files.
+ * @returns {Promise<string[]>} - A promise that resolves to an array of markdown file names.
+ * @throws {Error} - If there is an error reading the directory.
+ */
 async function getMarkdownFiles(directory) {
   try {
     const files = await fs.promises.readdir(directory)
@@ -100,6 +114,15 @@ async function getMarkdownFiles(directory) {
   }
 }
 
+/**
+ * Injects the HTML content into the layout.
+ * 
+ * @param {string} htmlContent - The HTML content to inject into the layout.
+ * @param {string} layout - The layout content.
+ * @param {object} metadata - The metadata extracted from the markdown content.
+ * 
+ * @returns {string} - The layout content with the markdown content injected.
+ */
 function injectHtmlIntoLayout(htmlContent, layout, metadata) {
   try {
     const layoutContent = injectMarkdownMetadata(layout, metadata)
@@ -107,6 +130,7 @@ function injectHtmlIntoLayout(htmlContent, layout, metadata) {
     return layoutContent.replace(pageContentRegex, htmlContent)
   } catch (error) {
     insertHtmlIntoLayoutError(layout, error)
+    throw error
   }
 }
 

@@ -10,13 +10,14 @@ Welcome to Static Donkey
   - [x] render partials 
   - [x] render md content.
   - [x] treat errors.
+  - [x] minify html?
+  - [x] insert title from .md header.
   - [ ] treat info and success messages.
   - [ ] add docs and doctrine.
   - [ ] add unit tests.
   - [ ] copy assets to the output folders.
      - if a file has js or assets the path should be fixed on build.
   - [ ] dynamic layouts.
-  - [ ] insert title from .md header.
   - [ ] SEO directives.
   - [ ] Generate sitemap.
   - [ ] RSS Feed.
@@ -25,7 +26,6 @@ Welcome to Static Donkey
   - [ ] use streams to read files.
   - [ ] use pages as start point and only process and store a layout when found a page that is using it.
   - [ ] sanitize it ?
-  - [ ] minify html?
   - [ ] Purge and minify css?
   - [ ] dev script?
     - provides an dev server with hot reload?
