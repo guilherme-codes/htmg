@@ -1,3 +1,8 @@
+--- 
+layout: posts
+title: first post
+---
+
 # Introduction to Markdown
 
 Markdown is a lightweight and easy-to-learn markup language, commonly used for formatting text in documents and web pages.

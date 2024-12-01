@@ -3,7 +3,7 @@ import fs from 'fs'
 import { createReadStream, createWriteStream } from 'fs'
 import { pipeline } from 'stream/promises'
 import { Transform } from 'stream'
-import { markdownToHtml } from '../utils/markdown-to-html.js'
+import { extractMarkdownMetadata, markdownToHtml, injectMarkdownMetadata } from '../utils/markdown.js'
 import { outputDir, pagesDir } from '../utils/contants.js'
 import { readDirectoryError } from '../log/reader.js'
 import { compileMarkdownFilesError, insertHtmlIntoLayoutError, writeOutputFileError } from '../log/build.js'
@@ -64,8 +64,10 @@ function createMarkdownTransform(layout) {
     transform(chunk, _, callback) {
       try {
         const markdown = chunk.toString()
+        const metadata = extractMarkdownMetadata(markdown)
         const html = markdownToHtml(markdown)
-        const finalHtml = injectHtmlIntoLayout(html, layout)
+        const finalHtml = injectHtmlIntoLayout(html, layout, metadata)
+        
         callback(null, finalHtml)
       } catch (error) {
         callback(error)
@@ -93,11 +95,15 @@ async function getMarkdownFiles(directory) {
   }
 }
 
-function injectHtmlIntoLayout(htmlContent, layout) {
+function injectHtmlIntoLayout(htmlContent, layout, metadata) {
   try {
     const contentRegex = /<!--\s*page_content\s*-->/
-    return layout.replace(contentRegex, htmlContent)
+    const layoutContent = injectMarkdownMetadata(layout, metadata)
+
+    return layoutContent.replace(contentRegex, htmlContent)
   } catch (error) {
     insertHtmlIntoLayoutError(layout, error)
   }
 }
+
+
