@@ -1,3 +1,5 @@
+import liveServer from 'live-server'
+
 import http from 'http'
 import fs from 'fs'
 import path from 'path'
@@ -5,55 +7,17 @@ import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const publicPath = path.join(__dirname, '..', 'output')
 
-const PORT = 3006
+const params = {
+  port: 3006, // Set the server port. Defaults to 8080.
+  host: '0.0.0.0', // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
+  root: publicPath, // Set root directory that's being served. Defaults to cwd.
+  open: false, // When false, it won't load your browser by default.
+  ignore: 'scss,node_modules', // comma-separated string for paths to ignore
+  file: 'index.html', // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
+  wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
+  logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
+}
 
-const server = http.createServer((req, res) => {
-  const url = req.url || ''
-  let urlPath = decodeURIComponent(url.split('?')[0])
-    
-  if (urlPath === '/') {
-    urlPath = '/index.html'
-  } 
-
-  const filePath = path.join(__dirname, '..', 'output', urlPath)
-
-  fs.stat(filePath, (err, stats) => {
-    if (err || !stats.isFile()) {
-      res.writeHead(404)
-      res.end()
-      return
-    }
-
-    const ext = path.extname(filePath)
-    const contentTypes = {
-      '.html': 'text/html',
-      '.css': 'text/css',
-      '.js': 'text/javascript',
-      '.json': 'application/json',
-      '.png': 'image/png',
-      '.jpg': 'image/jpeg',
-      '.gif': 'image/gif',
-      '.svg': 'image/svg+xml',
-      '.pdf': 'application/pdf',
-      '.txt': 'text/plain'
-    }
-
-    const contentType = contentTypes[ext] || 'application/octet-stream'
-
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        res.writeHead(500)
-        res.end('Erro on read file: ' + err.message)
-        return
-      }
-
-      res.writeHead(200, { 'Content-Type': contentType })
-      res.end(data)
-    })
-  })
-})
-
-server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
-})
+liveServer.start(params)
