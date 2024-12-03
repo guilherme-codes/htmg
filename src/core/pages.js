@@ -38,26 +38,35 @@ export async function buildPages(layouts) {
  * @returns {Promise<string[]>} - Array of relative paths to markdown files
  */
 async function getAllMarkdownFiles(directory) {
+  const pages = await traverse(directory, directory)
+
+  return pages
+}
+
+/**
+ * Recursively traverses a directory and returns an array of relative paths to all Markdown files.
+ * @param {string} dir - The directory to traverse.
+ * @param {string} baseDir - The base directory to calculate relative paths.
+ * @returns {Promise<string[]>} - A promise that resolves to an array of relative paths to all Markdown files.
+ */
+async function traverse(dir, baseDir) {
+  const files = await fs.promises.readdir(dir, { withFileTypes: true })
   const allFiles = []
 
-  async function traverse(dir, baseDir) {
-    const files = await fs.promises.readdir(dir, { withFileTypes: true })
+  for (const file of files) {
+    const fullPath = path.join(dir, file.name)
+    const relativePath = path.relative(baseDir, fullPath)
 
-    for (const file of files) {
-      const fullPath = path.join(dir, file.name)
-      const relativePath = path.relative(baseDir, fullPath)
-
-      if (file.isDirectory()) {
-        await traverse(fullPath, baseDir)
-      } else if (path.extname(file.name) === '.md') {
-        allFiles.push(relativePath)
-      }
+    if (file.isDirectory()) {
+      await traverse(fullPath, baseDir)
+    } else if (path.extname(file.name) === '.md') {
+      allFiles.push(relativePath)
     }
   }
 
-  await traverse(directory, directory)
   return allFiles
 }
+
 
 /**
  * Process a single markdown file and convert it to HTML
@@ -76,9 +85,7 @@ async function processFile(file, layouts) {
     log.parsingMarkdownFiles(file)
     const markdownTransform = createMarkdownTransform(layouts)
     
-    // Ensure the subdirectory exists in the output directory
     await ensureDirectoryExists(path.dirname(outputPath))
-    
     await pipeline(
       createReadStream(inputPath, 'utf-8'),
       markdownTransform,
