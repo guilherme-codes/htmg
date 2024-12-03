@@ -5,7 +5,6 @@ import { pipeline } from 'stream/promises'
 import { Transform } from 'stream'
 import { extractMarkdownMetadata, markdownToHtml, injectMarkdownMetadata } from '../utils/markdown.js'
 import { outputDir, pagesDir } from '../utils/contants.js'
-import { readDirectoryError } from '../log/reader.js'
 import * as log from '../log/index.js'
 import { pageContentRegex } from '../utils/regex.js'
 import { minifyHtml } from '../utils/minify.js'
@@ -115,7 +114,7 @@ async function getMarkdownFiles(directory) {
     const files = await fs.promises.readdir(directory)
     return files.filter(file => path.extname(file) === '.md')
   } catch (error) {
-    readDirectoryError(directory, error)
+    log.readDirectoryError(directory, error)
     throw error
   }
 }

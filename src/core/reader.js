@@ -14,14 +14,7 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import { 
-  accessPathError, 
-  readDirectoryContentError, 
-  readDirectoryError, 
-  readDirectoryFilesError, 
-  readFileError, 
-  readLayoutsError
-} from '../log/reader.js'
+import * as log from '../log/index.js'
 import { layoutsDir } from '../utils/contants.js'
 
 /**
@@ -39,7 +32,7 @@ export async function readLayouts(basePath = layoutsDir) {
   
     return Object.fromEntries(layoutContents)
   } catch (error) {
-    readLayoutsError(basePath, error)
+    log.readLayoutsError(basePath, error)
   }
 }
 
@@ -54,7 +47,7 @@ async function validateBasePath(basePath) {
   try {
     await fs.access(basePath)
   } catch (error) {
-    accessPathError(basePath, error)
+    log.accessPathError(basePath, error)
   }
 }
 
@@ -69,7 +62,7 @@ async function getDirectoriesList(basePath) {
     const entries = await fs.readdir(basePath, { withFileTypes: true })
     return entries.filter(entry => entry.isDirectory())
   } catch (error) {
-    readDirectoryContentError(basePath, error)
+    log.readDirectoryContentError(basePath, error)
 
     throw error
   }
@@ -90,7 +83,7 @@ async function readDirectoryContent(basePath, directory) {
   
     return [directory.name, contents]
   } catch (error) {
-    readDirectoryError(directory.name, error)
+    log.readDirectoryError(directory.name, error)
 
     throw error
   }
@@ -106,7 +99,7 @@ async function readFileContent(filePath) {
   try {
     return await fs.readFile(filePath, 'utf-8')
   } catch (error) {
-    readFileError(filePath, error)
+    log.readFileError(filePath, error)
   }
 }
 
@@ -127,6 +120,6 @@ async function readDirectoryFiles(dirPath, files) {
       files.map((file, index) => [path.parse(file).name, fileContents[index]])
     )
   } catch (error) {
-    readDirectoryFilesError(dirPath, error)
+    log.readDirectoryFilesError(dirPath, error)
   }
 }

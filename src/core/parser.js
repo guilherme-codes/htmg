@@ -1,4 +1,4 @@
-import { parserCircularDependencyError, parserFileContentError, parserPartialNotFound, parserPartialsError } from '../log/parser.js'
+import * as log from '../log/parser.js'
 /**
  * Parses the content of a file and replaces any includes with their corresponding partials.
  * 
@@ -18,7 +18,7 @@ export function parseFileContent(content, partials, processedIncludes = new Set(
         return processedContent.replace(fullMatch, processedPartial)
       }, content)
   } catch (error) {
-    parserFileContentError(content, error)
+    log.parserFileContentError(content, error)
 
     throw error
   }
@@ -64,7 +64,7 @@ function processPartial(partialName, partials, processedIncludes) {
       new Set(processedIncludes)
     )
   } catch (error) {
-    parserPartialsError(partialName, error)
+    log.parserPartialsError(partialName, error)
 
     throw error
   }
@@ -81,12 +81,12 @@ function processPartial(partialName, partials, processedIncludes) {
  */
 function validatePartials(partials, partialName, processedIncludes) {
   if (!partials[partialName]) {
-    parserPartialNotFound(partialName)
+    log.parserPartialNotFound(partialName)
     throw Error()
   }
 
   if (processedIncludes.has(partialName)) {
-    parserCircularDependencyError(partialName)
+    log.parserCircularDependencyError(partialName)
     throw Error()
   }
 }
