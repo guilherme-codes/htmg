@@ -1,5 +1,5 @@
 <!-- 
-layout: posts
+layout: default
 title: first post
 -->
 
@@ -20,12 +20,3 @@ Markdown is an excellent choice for:
 2. **Portability**: Widely supported by text editors, version control systems, and static site generators.
 3. **Conversion**: Easily converted to HTML, PDF, or other formats.
 
-## Syntax Examples
-
-Here are some basic examples of Markdown usage:
-
-### Headers
-
-# Level 1 Header
-## Level 2 Header
-### Level 3 Header
