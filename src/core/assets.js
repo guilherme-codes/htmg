@@ -1,12 +1,13 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
+import { assetsDir, outputDir } from '../utils/contants.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const assetsPath = path.join(__dirname, '..','..', 'assets')
-const distPath = path.join(__dirname, '..','..', 'dist')
+const assetsPath = path.join(__dirname, '..','..', assetsDir)
+const distPath = path.join(__dirname, '..','..', outputDir)
 
 function buildAssets(src, dest) {
   if (!fs.existsSync(dest)) {
