@@ -3,11 +3,12 @@ import fs from 'fs'
 import { createReadStream, createWriteStream } from 'fs'
 import { pipeline } from 'stream/promises'
 import { Transform } from 'stream'
-import { extractMarkdownMetadata, markdownToHtml, injectMarkdownMetadata } from '../utils/markdown.js'
+import { extractMetadata, markdownToHtml, injectMarkdownMetadata } from '../utils/content.js'
 import { outputDir, pagesDir } from '../utils/contants.js'
 import * as log from '../log/index.js'
 import { pageContentRegex } from '../utils/regex.js'
 import { minifyHtml } from '../utils/minify.js'
+import { pipe } from '../utils/fn.js'
 
 /**
  * Convert markdown pages to html files and add its content to the provided layouts.
@@ -18,7 +19,7 @@ import { minifyHtml } from '../utils/minify.js'
 export async function buildPages(layouts) {
   try {
     await createOutputDir()
-    const files = await getMarkdownFilesRecursively(pagesDir)
+    const files = await getPageContentFiles(pagesDir)
 
     for (const file of files) {
       await processFile(file, layouts)
@@ -39,11 +40,11 @@ export async function buildPages(layouts) {
  */
 async function processFile(file, layouts) {
   const { fullPath, relativePath } = file
-  const outputPath = path.join(outputDir, relativePath.replace('.md', '.html'))
-
+  const { outputPath, isMarkdown } = getOutputPath(relativePath)
+    
   try {
     log.parsingMarkdownFiles(relativePath)
-    const markdownTransform = createMarkdownTransform(layouts)
+    const markdownTransform = createPageContentTransform(layouts, isMarkdown)
     
     await ensureDirectoryExists(path.dirname(outputPath))    
     await pipeline(
@@ -54,6 +55,23 @@ async function processFile(file, layouts) {
   } catch (error) {
     log.writeOutputFileError(relativePath, error)
   }
+}
+
+function getOutputPath(relativePath) {
+  const isMarkdown = path.extname(relativePath) === '.md'
+ 
+  const outputPath =  isMarkdown ?
+    path.join(outputDir, relativePath.replace('.md', '.html')) :
+    path.join(outputDir, relativePath)
+
+  console.log('====================')
+  console.log('\n')
+  console.log(outputPath)
+  console.log('====================')
+  console.log('\n')
+
+
+  return { outputPath, isMarkdown }
 }
 
 function writeFile(output) {
@@ -67,24 +85,42 @@ function writeFile(output) {
  * @param {Object} layouts - The rendered layout content
  * @returns {Transform} A transform stream that processes markdown to HTML
  */
-function createMarkdownTransform(layouts) {
+function createPageContentTransform(layouts, isMarkdown) {
   return new Transform({
     transform(chunk, _, callback) {
       try {
-        const markdown = chunk.toString()
-        const metadata = extractMarkdownMetadata(markdown)
-        const html = markdownToHtml(markdown)
-        const pageLayout = metadata?.layout ? layouts[metadata.layout] : layouts.default
-        const finalHtml = injectHtmlIntoLayout(html, pageLayout, metadata)
+        const html = pipe(
+          chunk => chunk.toString(),
+          content => isMarkdown ? convertMarkdown(content) : content,
+          data => injectHtmlMetadata(data, layouts),
+          finalHtml => minifyHtml(finalHtml)
+        )
 
-        const minifiedHtml = minifyHtml(finalHtml)
-
-        callback(null, minifiedHtml)
+        callback(null, html(chunk))
       } catch (error) {
         callback(error)
       }
     }
   })
+}
+
+function convertMarkdown(markdown) {
+  return {
+    html: markdownToHtml(markdown),
+    metadata: extractMetadata(markdown)
+  }
+}
+
+function injectHtmlMetadata(data, layouts) {
+  console.log('====================')
+  console.log('\n')
+  console.log(data)
+  console.log('====================')
+  console.log('\n')
+  const { html, metadata } = data
+  const layout = layouts[metadata?.layout || 'default']
+
+  return injectHtmlIntoLayout(html, layout, metadata)
 }
 
 /**
@@ -124,24 +160,24 @@ async function createOutputDir() {
  * @returns {Promise<Array<{fullPath: string, relativePath: string}>>} - Array of objects containing full and relative paths
  * @throws {Error} - If there is an error reading the directory
  */
-async function getMarkdownFilesRecursively(directory, baseDir = directory) {
+async function getPageContentFiles(directory, baseDir = directory) {
   try {
     const files = await fs.promises.readdir(directory, { withFileTypes: true })
-    const markdownFiles = []
+    const pageContentFiles = []
 
     for (const file of files) {
       const fullPath = path.join(directory, file.name)
       const relativePath = path.relative(baseDir, fullPath)
 
       if (file.isDirectory()) {
-        const subDirFiles = await getMarkdownFilesRecursively(fullPath, baseDir)
-        markdownFiles.push(...subDirFiles)
-      } else if (path.extname(file.name) === '.md') {
-        markdownFiles.push({ fullPath, relativePath })
+        const subDirFiles = await getPageContentFiles(fullPath, baseDir)
+        pageContentFiles.push(...subDirFiles)
+      } else if (['.md', '.html'].includes(path.extname(file.name))) {
+        pageContentFiles.push({ fullPath, relativePath })
       }
     }
 
-    return markdownFiles
+    return pageContentFiles
   } catch (error) {
     log.readDirectoryError(directory, error)
     throw error

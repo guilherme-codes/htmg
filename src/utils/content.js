@@ -20,7 +20,7 @@ export function markdownToHtml(content) {
  * @param {string} markdown - The markdown string to extract metadata from.
  * @returns {object|null} - The extracted metadata as an object, or null if no metadata is found.
  */
-export function extractMarkdownMetadata(markdown) {
+export function extractMetadata(markdown) {
   const match = markdown.match(markdownHeaderRegex)
   
   if (!match) {
