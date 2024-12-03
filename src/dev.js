@@ -15,7 +15,7 @@ const params = {
   open: false,
   ignore: 'scss,node_modules',
   wait: 1000,
-  logLevel: 0
+  logLevel: 0,
 }
 
 // @ts-ignore
