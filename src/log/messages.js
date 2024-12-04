@@ -28,6 +28,8 @@ const logMessages = {
   ALL_LAYOUTS_BUILT: () => 'All layouts built successfully!',
   PARSING_MARKDOWN_FILES: (file) => `Parsing markdown file: ${file}`,
   CREATING_FILE: (file) => `Creating file: ${file}`,
+  WELCOME: () => 'Welcome to static Donkey. You\'re on dev mode now!',
+  STARTING_SERVER: (port) => `Server started at http://localhost:${port}`,
 }
 
 export default logMessages

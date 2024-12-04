@@ -33,3 +33,9 @@ export function formatInfo(customMessage) {
 
   console.log(formattedMessage)
 }
+
+export function formatInfoHighlight(customMessage) {
+  let formattedMessage = chalk.blueBright(customMessage)
+  console.log(formattedMessage)
+  console.log('\n')
+}

@@ -1,8 +1,8 @@
-import {formatError, formatInfo, formatSuccess} from './format.js'
+import * as F from './format.js'
 import messages from './messages.js'
 
 export function compileLayoutsError(error) {
-  formatError(
+  F.formatError(
     messages.BUILD_LAYOUTS_ERROR(),
     error
   )
@@ -11,7 +11,7 @@ export function compileLayoutsError(error) {
 }
 
 export function indexNotFoundError(layoutName) {
-  formatError(
+  F.formatError(
     messages.INDEX_NOT_FOUND_ERROR(layoutName)
   )
 
@@ -19,14 +19,14 @@ export function indexNotFoundError(layoutName) {
 }
 
 export function compileLayoutFilesError(layoutName, error) {
-  formatError(
+  F.formatError(
     messages.BUILD_LAYOUT_FILES_ERROR(layoutName),
     error
   )
 }
 
 export function writeOutputFileError(file, error) {
-  formatError(
+  F.formatError(
     messages.WRITE_OUTPUT_FILE_ERROR(file),
     error
   )
@@ -35,7 +35,7 @@ export function writeOutputFileError(file, error) {
 }
 
 export function insertHtmlIntoLayoutError(layoutName, error) {
-  formatError(
+  F.formatError(
     messages.INSERT_HTML_INTO_LAYOUT_ERROR(layoutName),
     error
   )
@@ -44,7 +44,7 @@ export function insertHtmlIntoLayoutError(layoutName, error) {
 }
 
 export function compileMarkdownFilesError(error) {
-  formatError(
+  F.formatError(
     messages.BUILD_MARKDOWN_FILES_ERROR(),
     error
   )
@@ -53,18 +53,23 @@ export function compileMarkdownFilesError(error) {
 }
 
 export function buildSuccess() {
-  formatSuccess(messages.FILES_BUILD_SUCCESS())
+  F.formatSuccess(messages.FILES_BUILD_SUCCESS())
 }
 
 export function buildingLayout(layoutName) {
-  formatInfo(messages.BUILDING_LAYOUT(layoutName))
+  F.formatInfo(messages.BUILDING_LAYOUT(layoutName))
 }
 
 export function allLayoutsBuilt() {
-  formatSuccess(messages.ALL_LAYOUTS_BUILT())
+  F.formatSuccess(messages.ALL_LAYOUTS_BUILT())
 }
 
 export function creatingFile(file) {
-  formatInfo(messages.CREATING_FILE(file))
+  F.formatInfo(messages.CREATING_FILE(file))
 }
 
+
+export function startServer(port) {
+  F.formatInfoHighlight(messages.WELCOME())
+  F.formatInfo(messages.STARTING_SERVER(port))
+}
