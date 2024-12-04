@@ -18,8 +18,8 @@ Welcome to Static Donkey
   - [x] dev script? provides an dev server with hot reload?
   - [x] dynamic layouts.
   - [x] improve logs.
-  - [ ] Support HTML as page content.
-  - [ ] Refactoring (dev, assets)
+  - [x] Support HTML as page content.
+  - [ ] Refactoring (dev and assets script)
 
   - [ ] SEO directives.
   - [ ] minify assets??
