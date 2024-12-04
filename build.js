@@ -4,9 +4,9 @@ import { buildPages } from './core/pages.js'
 import { assetsDir, outputDir } from './utils/contants.js'
 import { getBasePath } from './utils/path.js'
 
-(async function build() {
-  const layoutsContent = await buildLayouts()
-  
-  await buildPages(layoutsContent)
-  await buildAssets(getBasePath(assetsDir), getBasePath(outputDir))
-})()
+const assets = getBasePath(assetsDir)
+const output = getBasePath(outputDir)
+const layoutsContent = await buildLayouts()
+
+await buildPages(layoutsContent)
+await buildAssets(assets, output)

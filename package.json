@@ -1,5 +1,5 @@
 {
-  "name": "static-dummy",
+  "name": "static-donkey",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,6 @@
     "node": ">=20.0.0"
   },
   "bin": {
-    "donkey": "./bin/donkey.js"
+    "donkey": "./cli.js"
   }
 }

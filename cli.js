@@ -9,12 +9,12 @@ const __dirname = path.dirname(__filename)
 const [,, command] = process.argv
 
 if (command === 'dev') {
-  import(path.join(__dirname, '..', 'dev.js'))
+  import(path.join(__dirname, 'dev.js'))
     .catch(error => {
       console.error(`Error: ${error}`)
     })
 } else if (command === 'build') {
-  import(path.join(__dirname, '..', 'build.js'))
+  import(path.join(__dirname, 'build.js'))
     .catch(error => {
       console.error(`Error: ${error}`)
     })
