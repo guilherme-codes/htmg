@@ -64,13 +64,6 @@ function getOutputPath(relativePath) {
     path.join(outputDir, relativePath.replace('.md', '.html')) :
     path.join(outputDir, relativePath)
 
-  console.log('====================')
-  console.log('\n')
-  console.log(outputPath)
-  console.log('====================')
-  console.log('\n')
-
-
   return { outputPath, isMarkdown }
 }
 
@@ -83,6 +76,8 @@ function writeFile(output) {
  * Creates a transform stream that converts markdown to HTML and injects it into a layout
  * 
  * @param {Object} layouts - The rendered layout content
+ * @param {boolean} isMarkdown - Whether the content is markdown or not
+ * 
  * @returns {Transform} A transform stream that processes markdown to HTML
  */
 function createPageContentTransform(layouts, isMarkdown) {
@@ -91,7 +86,7 @@ function createPageContentTransform(layouts, isMarkdown) {
       try {
         const html = pipe(
           chunk => chunk.toString(),
-          content => isMarkdown ? convertMarkdown(content) : content,
+          content => extractPageData(content, isMarkdown),
           data => injectHtmlMetadata(data, layouts),
           finalHtml => minifyHtml(finalHtml)
         )
@@ -104,19 +99,30 @@ function createPageContentTransform(layouts, isMarkdown) {
   })
 }
 
-function convertMarkdown(markdown) {
+/**
+  * Extracts the HTML content and metadata from a markdown string.
+  *
+  * @param {string} content - The markdown string to extract data from.
+  * @param {boolean} isMarkdown - Whether the content is markdown or not.
+  * 
+  * @returns {Object} - An object containing the HTML content and metadata.
+*/
+function extractPageData(content, isMarkdown) {
   return {
-    html: markdownToHtml(markdown),
-    metadata: extractMetadata(markdown)
+    html: isMarkdown ? markdownToHtml(content) : content,
+    metadata: extractMetadata(content)
   }
 }
 
+/**
+ * Injects HTML metadata into a layout.
+ *
+ * @param {Object} data - The data object containing the HTML and metadata.
+ * @param {Object} layouts - The layouts object containing different layout options.
+ * @returns {string} - The injected HTML with the layout.
+ */
+
 function injectHtmlMetadata(data, layouts) {
-  console.log('====================')
-  console.log('\n')
-  console.log(data)
-  console.log('====================')
-  console.log('\n')
   const { html, metadata } = data
   const layout = layouts[metadata?.layout || 'default']
 
