@@ -1,6 +1,8 @@
 import path from 'path'
 import { mkdir, readdir, stat, copyFile } from 'fs/promises'
 import * as log from '../log/index.js'
+import { checkPathExists, getBasePath } from '../utils/path.js'
+import { assetsDir } from '../utils/contants.js'
 
 /**
  * Builds assets.
@@ -9,8 +11,14 @@ import * as log from '../log/index.js'
  * @param {string} dest - The path of the destination directory to copy the assets to.
  * @returns {Promise<void>} - A promise that resolves when the assets are built successfully, or rejects with an error if there's any issue.
  */
-export async function buildAssets(origin, dest) {
+export async function buildAssets(origin, dest) {  
   try {
+    const assetsPathExists = await checkPathExists(getBasePath(assetsDir))
+
+    if (!assetsPathExists) {
+      return
+    }
+    
     await mkdir(dest, { recursive: true })
     await copyAssetsDirectory(origin, dest)
   } catch (error) {
