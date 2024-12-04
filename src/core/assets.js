@@ -1,33 +1,64 @@
 import path from 'path'
-import { fileURLToPath } from 'url'
-import fs from 'fs'
-import { assetsDir, outputDir } from '../utils/contants.js'
+import { mkdir, readdir, stat, copyFile } from 'fs/promises'
+import * as log from '../log/index.js'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-const assetsPath = path.join(__dirname, '..','..', assetsDir)
-const distPath = path.join(__dirname, '..','..', outputDir)
-
-function buildAssets(src, dest) {
-  if (!fs.existsSync(dest)) {
-    fs.mkdirSync(dest, { recursive: true })
+/**
+ * Builds assets.
+ * 
+ * @param {string} origin - The path of the assets directory to copy from.
+ * @param {string} dest - The path of the destination directory to copy the assets to.
+ * @returns {Promise<void>} - A promise that resolves when the assets are built successfully, or rejects with an error if there's any issue.
+ */
+export async function buildAssets(origin, dest) {
+  try {
+    await mkdir(dest, { recursive: true })
+    await copyAssetsDirectory(origin, dest)
+  } catch (error) {
+    log.buildAssetsError(error)
+    throw error
   }
+}
 
-  const items = fs.readdirSync(src) 
-  items.forEach(item => {
-    const srcItem = path.join(src, item)
-    const destItem = path.join(dest, item)
+/**
+ * Copies the assets directory from the origin to the destination.
+ *
+ * @param {string} origin - The path of the origin directory.
+ * @param {string} destination - The path of the destination directory.
+ * @returns {Promise<void>} A promise that resolves when the assets directory is copied successfully.
+ * @throws {Error} If there is an error while copying the assets directory.
+ */
+async function copyAssetsDirectory(origin, destination) {
+  try {
+    const items = await readdir(origin)
+    const copyPromises = await mapFilesToCopy(items, origin, destination)
 
-    const stats = fs.statSync(srcItem)
+    await Promise.all(copyPromises)
+  } catch (error) {
+    log.buildAssetsError(error)
+    throw error
+  }
+}
+
+
+/**
+ * Maps the files to copy from the origin directory to the destination directory.
+ *
+ * @param {Array<string>} items - The array of file names to copy.
+ * @param {string} origin - The path of the origin directory.
+ * @param {string} destination - The path of the destination directory.
+ * @returns {Promise<Array>} - An array of promises that represent the copy operations.
+ */
+async function mapFilesToCopy(items, origin, destination) {
+  return items.map(async (item) => {
+    const itemOriginPath = path.join(origin, item)
+    const itemDestinationPath = path.join(destination, item)
+    const stats = await stat(itemOriginPath)
 
     if (stats.isDirectory()) {
-      buildAssets(srcItem, destItem) 
+      return buildAssets(itemOriginPath, itemDestinationPath)
     } else {
-      fs.copyFileSync(srcItem, destItem)
+      return copyFile(itemOriginPath, itemDestinationPath)
     }
   })
 }
 
-export const buildAssetsFn = () => buildAssets(assetsPath, distPath)
-console.log('Files copied to dist')

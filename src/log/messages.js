@@ -21,9 +21,10 @@ const logMessages = {
   BUILD_LAYOUT_FILES_ERROR: (layoutName) => `Error: compiling layout files for "${layoutName}"`,
   WRITE_OUTPUT_FILE_ERROR: (file) => `Error: creating page ${file}`,
   INSERT_HTML_INTO_LAYOUT_ERROR: (layoutName) => `Error: inserting HTML into layout "${layoutName}"`,
+  BUILD_ASSETS_ERROR: () => 'Error: building assets',
 
   // success and info alerts
-  FILES_BUILD_SUCCESS: () => 'All files built successfully!',
+  PAGES_BUILD_SUCCESS: () => 'All pages built successfully!',
   BUILDING_LAYOUT: (layoutName) => `Building ${layoutName} layout`,
   ALL_LAYOUTS_BUILT: () => 'All layouts built successfully!',
   PARSING_MARKDOWN_FILES: (file) => `Parsing markdown file: ${file}`,

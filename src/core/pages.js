@@ -25,7 +25,7 @@ export async function buildPages(layouts) {
       await processFile(file, layouts)
     }
 
-    log.buildSuccess()
+    log.pagesBuildSuccess()
   } catch (error) {
     log.compileMarkdownFilesError(error)
   }

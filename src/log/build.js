@@ -52,8 +52,8 @@ export function compileMarkdownFilesError(error) {
   process.exit(1)
 }
 
-export function buildSuccess() {
-  F.formatSuccess(messages.FILES_BUILD_SUCCESS())
+export function pagesBuildSuccess() {
+  F.formatInfo(messages.PAGES_BUILD_SUCCESS())
 }
 
 export function buildingLayout(layoutName) {
@@ -72,4 +72,13 @@ export function creatingFile(file) {
 export function startServer(port) {
   F.formatInfoHighlight(messages.WELCOME())
   F.formatInfo(messages.STARTING_SERVER(port))
+}
+
+export function buildAssetsError(error) {
+  F.formatError(
+    messages.BUILD_ASSETS_ERROR(),
+    error
+  )
+
+  process.exit(1)
 }
