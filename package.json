@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "node ./src/build.js",
-    "dev": "npm run build && node --watch ./src/dev.js",
+    "build": "node ./build.js",
+    "dev": "npm run build && node --watch ./dev.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -23,5 +23,11 @@
     "html-minifier": "^4.0.0",
     "showdown": "^2.1.0",
     "socket.io": "^4.8.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "bin": {
+    "donkey": "./bin/donkey.js"
   }
 }
