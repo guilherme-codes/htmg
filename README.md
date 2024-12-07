@@ -19,8 +19,9 @@ Welcome to Static Donkey
   - [x] dynamic layouts.
   - [x] improve logs.
   - [x] Support HTML as page content.
-  - [x] Refactoring (dev and assets script)
-  - [ ] Generate sitemap.
+  - [x] Refactoring (dev and assets script).
+  - [x] Generate sitemap.
+  - [x] Use env vars.
 
   - [ ] SEO directives.
   - [ ] Purge and Minify assets??
