@@ -1,3 +1,7 @@
+/**
+ * This module provides a function to generate a sitemap for a website.
+ */
+
 import fs from 'fs'
 import path from 'path'
 import xml2js from 'xml2js'
@@ -118,7 +122,7 @@ export function buildSitemap(baseDir, baseUrl, options = {}) {
 
   const builder = new xml2js.Builder()
   const xml = builder.buildObject(sitemap)
-  
+
   fs.writeFileSync(config.outFile, xml)
 
   return {
