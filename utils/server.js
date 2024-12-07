@@ -1,3 +1,7 @@
+/**
+ * A simple server to serve the static files with live reload
+ */
+
 import liveServer from 'live-server'
 import env from './environment.js'
 import { getBasePath } from './path.js'

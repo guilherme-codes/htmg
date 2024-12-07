@@ -1,3 +1,7 @@
+/**
+ * Watch for changes in the pages and layouts directories
+ */
+
 import fs from 'fs'
 import env from './environment.js'
 import { getBasePath } from './path.js'
