@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node --env-file .env ./build.js",
-    "dev": "npm run build && node --watch --env-file .env ./dev.js",
+    "dev": "npm run build && node --env-file .env --watch ./dev.js",
     "test": "node --test tests/",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
