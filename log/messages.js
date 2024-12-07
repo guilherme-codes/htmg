@@ -1,3 +1,7 @@
+/**
+ * This file centralizes all the log messages that are used in the application.
+ */
+
 const logMessages = {
   // read errors
   ACCESS_PATH_ERROR: (path) => `Error: accessing path: ${path}`,

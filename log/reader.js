@@ -1,3 +1,7 @@
+/**
+ * Log messages for reading files step
+ */
+
 import messages from './messages.js'
 import {formatError} from './format.js'
 

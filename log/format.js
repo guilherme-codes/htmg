@@ -1,3 +1,7 @@
+/*
+  This file contains functions to format log messages
+**/
+
 import chalk from 'chalk'
 
 export function formatError(customMessage, error) {

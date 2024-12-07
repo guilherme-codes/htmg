@@ -1,3 +1,6 @@
+/**
+ * Log messages for building step
+ */
 import * as F from './format.js'
 import messages from './messages.js'
 

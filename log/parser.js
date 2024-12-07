@@ -1,3 +1,6 @@
+/**
+ * Log messages for parsing step
+ */
 import {formatError, formatInfo} from './format.js'
 import messages from './messages.js'
 
