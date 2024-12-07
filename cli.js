@@ -2,31 +2,49 @@
 
 import path from 'path'
 import { fileURLToPath } from 'url'
+import * as log from './log/index.js'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const baseDir =  path.dirname(__filename)
 
-const [,, command] = process.argv
+async function run () {
+  const [,, command] = process.argv
+  const selectedCommand = getCommand(command)
 
-if (command === 'dev') {
-  import(path.join(__dirname, 'build.js'))
-    .then(() => {
-      import(path.join(__dirname, 'dev.js'))
-        .catch(error => {
-          console.error(`Error: ${error}`)
-        })
-  
-    })
-    .catch(error => {
-      console.error(`Error: ${error}`)
-    })
+  if (!selectedCommand) {
+    log.commandNotFound(command)
+    process.exit(1)
+  }
 
-
-} else if (command === 'build') {
-  import(path.join(__dirname, 'build.js'))
-    .catch(error => {
-      console.error(`Error: ${error}`)
-    })
-} else {
-  console.log('Unknown command')
+  await selectedCommand()
 }
+
+function getCommand (command) {
+  const options  = {
+    dev: async () => {
+      await executeCommand(path.join(baseDir, 'build.js'))
+      await executeCommand(path.join(baseDir, 'dev.js'))
+    },
+    build: async () => {
+      await executeCommand(path.join(baseDir, 'build.js'))
+    },
+    '--help': () => log.help()
+  }
+
+  return options[command]
+}
+
+async function executeCommand(scriptPath) {
+  try {
+    await import(scriptPath)
+  } catch (error) {
+    log.unexpectedError(error.message)
+    process.exit(1)
+  }
+}
+
+
+run().catch(error => {
+  log.unexpectedError(error.message)
+  process.exit(1)
+})

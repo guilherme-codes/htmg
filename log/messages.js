@@ -35,6 +35,11 @@ const logMessages = {
   CREATING_FILE: (file) => `Creating file: ${file}`,
   WELCOME: () => 'Welcome to static Donkey. You\'re on dev mode now!',
   STARTING_SERVER: (port) => `Server started at http://localhost:${port}`,
+
+  // commands
+  COMMAND_NOT_FOUND: (command) => `Unknown command: ${command}. Use --help to see available commands`,
+
+  UNEXPECTED_ERROR: () => 'Unexpected Error',
 }
 
 export default logMessages

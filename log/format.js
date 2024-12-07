@@ -1,5 +1,5 @@
 /*
-  This file contains functions to format log messages
+  This file contains functions to format log messages applying colors and emojis.
 **/
 
 import chalk from 'chalk'
@@ -42,4 +42,9 @@ export function formatInfoHighlight(customMessage) {
   let formattedMessage = chalk.blueBright(customMessage)
   console.log(formattedMessage)
   console.log('\n')
+}
+
+export function formatRemarks(customMessage) {
+  let formattedMessage = chalk.magenta(customMessage)
+  return formattedMessage
 }
