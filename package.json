@@ -1,5 +1,5 @@
 {
-  "name": "static-donkey",
+  "name": "htmg",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,6 @@
     "node": ">=20.0.0"
   },
   "bin": {
-    "donkey": "./cli.js"
+    "htmg": "./cli.js"
   }
 }
