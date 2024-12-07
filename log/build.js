@@ -56,7 +56,7 @@ export function compileMarkdownFilesError(error) {
 }
 
 export function pagesBuildSuccess() {
-  F.formatInfo(messages.PAGES_BUILD_SUCCESS())
+  F.formatSuccess(messages.PAGES_BUILD_SUCCESS())
 }
 
 export function buildingLayout(layoutName) {

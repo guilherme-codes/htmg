@@ -7,8 +7,12 @@ import { getBasePath } from './utils/path.js'
 
 const assets = getBasePath(config.assetsDir)
 const output = getBasePath(config.outputDir)
-const layoutsContent = await buildLayouts()
 
-await buildPages(layoutsContent)
-await buildAssets(assets, output)
-await buildSitemap(output, config.siteUrl)
+export async function build() {
+  const layoutsContent = await buildLayouts()
+  await buildPages(layoutsContent)
+  await buildAssets(assets, output)
+  await buildSitemap(output, config.siteUrl)
+}
+
+await build()

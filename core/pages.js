@@ -43,7 +43,7 @@ async function processFile(file, layouts) {
   const { outputPath, isMarkdown } = getOutputPath(relativePath)
     
   try {
-    log.parsingMarkdownFiles(relativePath)
+    log.parsingPage(relativePath)
     const markdownTransform = createPageContentTransform(layouts, isMarkdown)
     
     await ensureDirectoryExists(path.dirname(outputPath))    

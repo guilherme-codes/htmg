@@ -39,8 +39,8 @@ export function parserCircularDependencyError(partialName) {
   process.exit(1)
 }
 
-export function parsingMarkdownFiles(file) {
+export function parsingPage(file) {
   formatInfo(
-    messages.PARSING_MARKDOWN_FILES(file),
+    messages.PARSING_PAGE(file),
   )
 }

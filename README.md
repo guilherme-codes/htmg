@@ -22,7 +22,8 @@ Welcome to Static Donkey
   - [x] Refactoring (dev and assets script).
   - [x] Generate sitemap.
   - [x] Use env vars.
-
+  - [ ] logs for build assets.
+  - [ ] logs for build sitemap.
   - [ ] SEO directives.
   - [ ] Purge and Minify assets??
   - [ ] add docs and doctrine.
