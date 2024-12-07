@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "node ./build.js",
-    "dev": "npm run build && node --watch ./dev.js",
+    "build": "node --env-file .env ./build.js",
+    "dev": "npm run build && node --watch --env-file .env ./dev.js",
     "test": "node --test tests/",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -15,12 +15,14 @@
   "description": "",
   "type": "module",
   "devDependencies": {
-    "eslint": "^9.14.0",
-    "live-server": "^1.2.2"
+    "eslint": "^9.14.0"
   },
   "dependencies": {
     "chalk": "^5.3.0",
+    "dotenv": "^16.4.7",
+    "env-var": "^7.5.0",
     "html-minifier": "^4.0.0",
+    "live-server": "^1.2.2",
     "showdown": "^2.1.0",
     "socket.io": "^4.8.1",
     "xml2js": "^0.6.2"

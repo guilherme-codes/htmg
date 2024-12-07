@@ -2,7 +2,7 @@ import path from 'path'
 import { mkdir, readdir, stat, copyFile } from 'fs/promises'
 import * as log from '../log/index.js'
 import { checkPathExists, getBasePath } from '../utils/path.js'
-import { assetsDir } from '../utils/contants.js'
+import config from '../utils/config.js'
 
 /**
  * Builds assets.
@@ -13,7 +13,7 @@ import { assetsDir } from '../utils/contants.js'
  */
 export async function buildAssets(origin, dest) {  
   try {
-    const assetsPathExists = await checkPathExists(getBasePath(assetsDir))
+    const assetsPathExists = await checkPathExists(getBasePath(config.assetsDir))
 
     if (!assetsPathExists) {
       return

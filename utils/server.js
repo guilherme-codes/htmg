@@ -1,9 +1,9 @@
 import liveServer from 'live-server'
-import { outputDir } from './contants.js'
+import config from './config.js'
 import { getBasePath } from './path.js'
 import * as log from '../log/index.js'
 
-const publicPath = getBasePath(outputDir)
+const publicPath = getBasePath(config.outputDir)
 
 export function startServer () {
   const params = {

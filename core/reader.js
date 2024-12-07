@@ -15,14 +15,14 @@
 import fs from 'fs/promises'
 import path from 'path'
 import * as log from '../log/index.js'
-import { layoutsDir } from '../utils/contants.js'
+import config from '../utils/config.js'
 
 /**
 * Reads all layout files from the base directory.
 * @param {string} [basePath='layouts'] Path to folder containing layout files (default: layouts)
 * @returns {Promise<Object>} Layout contents organized by directory and partials.
 */
-export async function readLayouts(basePath = layoutsDir) {
+export async function readLayouts(basePath = config.layoutsDir) {
   try {
     await validateBasePath(basePath)
     const directories = await getDirectoriesList(basePath)

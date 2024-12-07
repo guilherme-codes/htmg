@@ -1,11 +1,11 @@
 import fs from 'fs'
-import { layoutsDir, pagesDir } from './contants.js'
+import config from './config.js'
 import { getBasePath } from './path.js'
 import { spawn } from 'child_process'
 
 const paths = [
-  getBasePath(pagesDir),
-  getBasePath(layoutsDir)
+  getBasePath(config.pagesDir),
+  getBasePath(config.layoutsDir)
 ]
 
 export function watchChanges() {
