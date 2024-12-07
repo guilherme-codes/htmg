@@ -1,4 +1,3 @@
-import { minify } from 'html-minifier'
 /**
  * Minify HTML content
  * 
@@ -6,6 +5,8 @@ import { minify } from 'html-minifier'
  *  
  * @returns {string} - The minified HTML content
  */
+
+import { minify } from 'html-minifier'
 
 export function minifyHtml(html) {
   return minify(html, {

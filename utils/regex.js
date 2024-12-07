@@ -1,3 +1,7 @@
+/**
+ * This file contains all the regex patterns used in the project.
+ */
+
 const HTML_TAG_ATTRIBUTES = '\\s[^>]*'
 
 const startHtmlRegex = new RegExp(`<html(${HTML_TAG_ATTRIBUTES})?>`, 'i')

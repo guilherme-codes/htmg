@@ -1,3 +1,7 @@
+/**
+ * This file is responsible for providing utility functions to work with paths.
+ */
+
 import { access } from 'fs/promises'
 import path from 'path'
 

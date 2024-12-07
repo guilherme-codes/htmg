@@ -4,7 +4,7 @@ import { createReadStream, createWriteStream } from 'fs'
 import { pipeline } from 'stream/promises'
 import { Transform } from 'stream'
 import { extractMetadata, markdownToHtml, injectMarkdownMetadata } from '../utils/content.js'
-import config from '../utils/config.js'
+import env from '../utils/environment.js'
 import * as log from '../log/index.js'
 import { pageContentRegex } from '../utils/regex.js'
 import { minifyHtml } from '../utils/minify.js'
@@ -19,7 +19,7 @@ import { pipe } from '../utils/fn.js'
 export async function buildPages(layouts) {
   try {
     await createOutputDir()
-    const files = await getPageContentFiles(config.pagesDir)
+    const files = await getPageContentFiles(env.pagesDir)
 
     for (const file of files) {
       await processFile(file, layouts)
@@ -61,8 +61,8 @@ function getOutputPath(relativePath) {
   const isMarkdown = path.extname(relativePath) === '.md'
  
   const outputPath =  isMarkdown ?
-    path.join(config.outputDir, relativePath.replace('.md', '.html')) :
-    path.join(config.outputDir, relativePath)
+    path.join(env.outputDir, relativePath.replace('.md', '.html')) :
+    path.join(env.outputDir, relativePath)
 
   return { outputPath, isMarkdown }
 }
@@ -150,8 +150,8 @@ async function ensureDirectoryExists(dir) {
  */
 async function createOutputDir() {
   try {
-    await fs.promises.rm(config.outputDir, { recursive: true, force: true })
-    await fs.promises.mkdir(config.outputDir, { recursive: true })
+    await fs.promises.rm(env.outputDir, { recursive: true, force: true })
+    await fs.promises.mkdir(env.outputDir, { recursive: true })
   } catch (error) {
     // TODO: Handle error
     throw error

@@ -2,17 +2,17 @@ import { buildAssets } from './core/assets.js'
 import { buildLayouts } from './core/layouts.js'
 import { buildPages } from './core/pages.js'
 import { buildSitemap } from './core/sitemap.js'
-import config from './utils/config.js'
+import env from './utils/environment.js'
 import { getBasePath } from './utils/path.js'
 
-const assets = getBasePath(config.assetsDir)
-const output = getBasePath(config.outputDir)
+const assets = getBasePath(env.assetsDir)
+const output = getBasePath(env.outputDir)
 
 export async function build() {
   const layoutsContent = await buildLayouts()
   await buildPages(layoutsContent)
   await buildAssets(assets, output)
-  await buildSitemap(output, config.siteUrl)
+  await buildSitemap(output, env.siteUrl)
 }
 
 await build()
