@@ -12,7 +12,8 @@ const envs = {
   pagesDir: env.get('PAGES_DIR').default('pages').asString(),
   layoutsDir: env.get('LAYOUTS_DIR').default('layouts').asString(),
   assetsDir: env.get('ASSETS_DIR').default('assets').asString(),
-  siteUrl: env.get('SITE_URL').required().asString()
+  siteUrl: env.get('SITE_URL').required().asString(),
+  templateDir: 'template'
 }
 
 export default envs

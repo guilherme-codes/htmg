@@ -7,6 +7,10 @@ import path from 'path'
 
 export function getBasePath(directory) {
   const basePath = process.cwd()
+
+  if (!directory) {
+    return basePath
+  }
   
   return path.join(basePath, directory)
 }

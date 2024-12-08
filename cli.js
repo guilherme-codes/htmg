@@ -21,6 +21,9 @@ async function run () {
 
 function getCommand (command) {
   const options  = {
+    init: async () => {
+      await executeCommand(path.join(baseDir, 'init.js'))
+    },
     dev: async () => {
       await executeCommand(path.join(baseDir, 'build.js'))
       await executeCommand(path.join(baseDir, 'dev.js'))
