@@ -33,7 +33,7 @@ const logMessages = {
   ALL_LAYOUTS_BUILT: () => 'All layouts built successfully!',
   PARSING_PAGE: (file) => `Parsing page file: ${file}`,
   CREATING_FILE: (file) => `Creating file: ${file}`,
-  WELCOME: () => 'Welcome to static Donkey. You\'re on dev mode now!',
+  WELCOME: () => 'Welcome to HTMG. You\'re on dev mode now!',
   STARTING_SERVER: (port) => `Server started at http://localhost:${port}`,
 
   // commands
