@@ -6,7 +6,6 @@ HTMG is a lightweight static site generator built with Node.js that supports bot
   <img src="https://github.com/user-attachments/assets/abd3b49a-3e44-4cec-bfea-48a2343461ac" width="300" />
 </p>
 
-
 ## Features
 
 - Simple and easy to use
@@ -17,6 +16,7 @@ HTMG is a lightweight static site generator built with Node.js that supports bot
 - Asset minification
 - Sitemap generation
 - Hot reload development server
+- Customizable directory structure
 
 ## Quick Start
 
@@ -32,9 +32,33 @@ This will generate a basic template structure. To start developing your site:
 npm run dev
 ```
 
+## Configuration
+
+HTMG can be configured using a `.env` file in your project root. While the default configuration works out of the box, you can customize the directory structure and site settings:
+
+```env
+# Directory Configuration
+OUTPUT_DIR=dist        # Output directory for built files
+PAGES_DIR=pages       # Source directory for your content
+LAYOUTS_DIR=layouts   # Directory containing your layouts
+ASSETS_DIR=assets     # Directory for static assets
+
+# Site Configuration
+SITE_URL=https://example.com  # Your website URL for SEO.
+```
+
+Default directory structure:
+```
+your-project/
+  ├── pages/         
+  ├── layouts/        
+  ├── assets/         
+  └── dist/           
+```
+
 ## Project Structure
 
-### `/layouts`
+### `/layouts` (or custom LAYOUTS_DIR)
 
 Contains HTML layouts and their partials. Each layout should be in its own directory.
 
@@ -56,7 +80,7 @@ Example usage in `index.html`:
 <!-- include: footer -->
 ```
 
-### `/assets`
+### `/assets` (or custom ASSETS_DIR)
 
 Contains all static files used in your website:
 - JavaScript files
@@ -64,11 +88,11 @@ Contains all static files used in your website:
 - Images
 - Other static resources
 
-### `/pages`
+### `/pages` (or custom PAGES_DIR)
 
 Contains your website content in either HTML or Markdown format. The content will be injected into the specified layout at the `<!-- page_content -->` placeholder.
 
-Pages can include headers to specify metadata:
+Pages can include front-matter style headers to specify metadata:
 
 ```html
 <!-- 
@@ -102,7 +126,7 @@ npm run build
 ```
 
 The build process:
-1. Generates the static site in the `/dist` directory
+1. Generates the static site in the `/dist` directory (or custom OUTPUT_DIR)
 2. Maintains the same folder structure as defined in `/pages`
 3. Minifies all assets and HTML files
 4. Generates SEO meta tags based on page metadata
