@@ -7,8 +7,5 @@ export const basePackageJson = {
   "devDependencies": {
     "htmg": "github:guilherme-codes/htmg"
   },
-  "type": "module",
-  "engines": {
-    "node": ">=20.0.0"
-  }
+  "type": "module"
 }

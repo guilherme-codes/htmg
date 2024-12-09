@@ -7,7 +7,6 @@ meta-type: article
 meta-title: Know more about MD!
 meta-url: auto-generated (should we use env var?)
 meta-name: My site name
-meta-modified-time: auto-generated 
 -->
 
 # What is Markdown?
