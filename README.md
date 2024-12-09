@@ -63,7 +63,7 @@ Contains all static files used in your website:
 
 Contains your website content in either HTML or Markdown format. The content will be injected into the specified layout at the `<!-- page_content -->` placeholder.
 
-Pages can include front-matter style headers to specify metadata:
+Pages can include headers to specify metadata:
 
 ```html
 <!-- 
