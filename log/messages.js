@@ -38,8 +38,12 @@ const logMessages = {
 
   // commands
   COMMAND_NOT_FOUND: (command) => `Unknown command: ${command}. Use --help to see available commands`,
-
   UNEXPECTED_ERROR: () => 'Unexpected Error',
+
+  // init
+  INITIALIZING_PROJECT: () => 'Initializing project...',
+  ASK_PROJECT_NAME: () => 'What is the name of your project? ',
+  ERROR_REPOSITORY_EXISTS: () => 'There is already a package.json file in this directory.',
 }
 
 export default logMessages
