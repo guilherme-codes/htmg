@@ -5,7 +5,7 @@
 import { access } from 'fs/promises'
 import path from 'path'
 
-export function getBasePath(directory) {
+export function getExecBasePath(directory) {
   const basePath = process.cwd()
 
   if (!directory) {

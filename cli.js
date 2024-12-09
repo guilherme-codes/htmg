@@ -41,6 +41,7 @@ async function executeCommand(scriptPath) {
   try {
     await import(scriptPath)
   } catch (error) {
+    console.log(error)
     log.unexpectedError(error.message)
     process.exit(1)
   }

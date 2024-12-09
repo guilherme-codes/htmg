@@ -1,4 +1,5 @@
-{
+/* eslint-disable quotes */
+export const basePackageJson = {
   "scripts": {
     "dev": "htmg dev",
     "build": "htmg build"

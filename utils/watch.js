@@ -4,13 +4,13 @@
 
 import fs from 'fs'
 import env from './environment.js'
-import { getBasePath } from './path.js'
+import { getExecBasePath } from './path.js'
 import { build } from '../build.js'
 
 const paths = [
-  getBasePath(env.pagesDir),
-  getBasePath(env.layoutsDir),
-  getBasePath(env.assetsDir)
+  getExecBasePath(env.pagesDir),
+  getExecBasePath(env.layoutsDir),
+  getExecBasePath(env.assetsDir)
 ]
 
 export function watchChanges() {

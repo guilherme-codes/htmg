@@ -1,7 +1,7 @@
 import path from 'path'
 import { mkdir, readdir, stat, copyFile } from 'fs/promises'
 import * as log from '../log/index.js'
-import { checkPathExists, getBasePath } from '../utils/path.js'
+import { checkPathExists, getExecBasePath } from '../utils/path.js'
 import env from '../utils/environment.js'
 
 /**
@@ -13,7 +13,7 @@ import env from '../utils/environment.js'
  */
 export async function buildAssets(origin, dest) {  
   try {
-    const assetsPathExists = await checkPathExists(getBasePath(env.assetsDir))
+    const assetsPathExists = await checkPathExists(getExecBasePath(env.assetsDir))
 
     if (!assetsPathExists) {
       return
