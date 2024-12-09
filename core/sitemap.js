@@ -5,6 +5,7 @@
 import fs from 'fs'
 import path from 'path'
 import xml2js from 'xml2js'
+import * as log from '../log/index.js'
 
 const DEFAULT_OPTIONS = {
   changefreq: 'weekly',
@@ -43,6 +44,7 @@ const DEFAULT_OPTIONS = {
  */
 function createUrlEntry(baseUrl, relativePath, lastModified, options) {
   const urlPath = formatUrlPath(relativePath)
+
   return {
     loc: `${baseUrl}/${urlPath}`,
     lastmod: lastModified.toISOString(),
@@ -110,23 +112,22 @@ function generateSitemapStructure(urls) {
  * @param {string} baseDir - Root directory to scan
  * @param {string} baseUrl - Base URL of the website
  * @param {Partial<SitemapOptions>} options - Optional configuration
- * @returns {SitemapResult}
  */
 export function buildSitemap(baseDir, baseUrl, options = {}) {
-  const config = { ...DEFAULT_OPTIONS, ...options }
-  const normalizedBaseUrl = baseUrl.replace(/\/$/, '')
-  config.outFile = path.join(baseDir, config.outFile)
+  try {
+    log.buildingSitemap()
+    const config = { ...DEFAULT_OPTIONS, ...options }
+    config.outFile = path.join(baseDir, config.outFile)
 
-  const urls = scanDirectory(baseDir, baseDir, normalizedBaseUrl, config)
-  const sitemap = generateSitemapStructure(urls)
-
-  const builder = new xml2js.Builder()
-  const xml = builder.buildObject(sitemap)
-
-  fs.writeFileSync(config.outFile, xml)
-
-  return {
-    urlCount: urls.length,
-    filePath: config.outFile
+    const urls = scanDirectory(baseDir, baseDir, baseUrl, config)
+    const sitemap = generateSitemapStructure(urls)
+  
+    const builder = new xml2js.Builder()
+    const xml = builder.buildObject(sitemap)
+  
+    fs.writeFileSync(config.outFile, xml)
+  } catch (error) {
+    log.buildingSitemapError(error)
   }
+
 }

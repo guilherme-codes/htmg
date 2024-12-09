@@ -27,7 +27,7 @@ const logMessages = {
   INSERT_HTML_INTO_LAYOUT_ERROR: (layoutName) => `Error: inserting HTML into layout "${layoutName}"`,
   BUILD_ASSETS_ERROR: () => 'Error: building assets',
 
-  // success and info alerts
+  //build
   PAGES_BUILD_SUCCESS: () => 'All pages built successfully!',
   BUILDING_LAYOUT: (layoutName) => `Building ${layoutName} layout`,
   ALL_LAYOUTS_BUILT: () => 'All layouts built successfully!',
@@ -35,6 +35,7 @@ const logMessages = {
   CREATING_FILE: (file) => `Creating file: ${file}`,
   WELCOME: () => 'Welcome to HTMG. You\'re on dev mode now!',
   STARTING_SERVER: (port) => `Server started at http://localhost:${port}`,
+  BUILD_COMPLETE: () => 'Build complete!',
 
   // commands
   COMMAND_NOT_FOUND: (command) => `Unknown command: ${command}. Use --help to see available commands`,
@@ -44,6 +45,14 @@ const logMessages = {
   INITIALIZING_PROJECT: () => 'Initializing project...',
   ASK_PROJECT_NAME: () => 'What is the name of your project? ',
   ERROR_REPOSITORY_EXISTS: () => 'There is already a package.json file in this directory.',
+
+  // assets
+  PROCESSING_ASSETS: () => 'Processing assets...',
+
+  // sitemap
+  SITEMAP_BUILDING: () => 'Building sitemap...',
+  ERRO_BUILDING_SITEMAP: () => 'Error building sitemap',
+  
 }
 
 export default logMessages

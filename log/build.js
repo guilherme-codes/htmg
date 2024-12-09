@@ -76,6 +76,9 @@ export function startServer(port) {
   F.formatInfoHighlight(messages.WELCOME())
   F.formatInfo(messages.STARTING_SERVER(port))
 }
+export function processingAssets() {
+  F.formatInfo(messages.PROCESSING_ASSETS())
+}
 
 export function buildAssetsError(error) {
   F.formatError(
@@ -84,4 +87,21 @@ export function buildAssetsError(error) {
   )
 
   process.exit(1)
+}
+
+export function buildingSitemap() {
+  F.formatInfo(messages.SITEMAP_BUILDING())
+}
+
+export function buildingSitemapError(error) {
+  F.formatError(
+    messages.ERRO_BUILDING_SITEMAP(),
+    error
+  )
+
+  process.exit(1)
+}
+
+export function buildComplete() {
+  F.formatSuccess(messages.BUILD_COMPLETE())
 }

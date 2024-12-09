@@ -4,6 +4,7 @@ import * as log from '../log/index.js'
 import { checkPathExists, getExecBasePath } from '../utils/path.js'
 import env from '../utils/environment.js'
 
+
 /**
  * Builds assets.
  * 
@@ -11,14 +12,21 @@ import env from '../utils/environment.js'
  * @param {string} dest - The path of the destination directory to copy the assets to.
  * @returns {Promise<void>} - A promise that resolves when the assets are built successfully, or rejects with an error if there's any issue.
  */
-export async function buildAssets(origin, dest) {  
+
+export async function buildAssets(origin, dest) {
+  log.processingAssets()
+
+  processAssets(origin, dest)
+}
+
+async function processAssets(origin, dest) {  
   try {
     const assetsPathExists = await checkPathExists(getExecBasePath(env.assetsDir))
 
     if (!assetsPathExists) {
       return
     }
-    
+
     await mkdir(dest, { recursive: true })
     await copyAssetsDirectory(origin, dest)
   } catch (error) {
@@ -63,7 +71,7 @@ async function mapFilesToCopy(items, origin, destination) {
     const stats = await stat(itemOriginPath)
 
     if (stats.isDirectory()) {
-      return buildAssets(itemOriginPath, itemDestinationPath)
+      return processAssets(itemOriginPath, itemDestinationPath)
     } else {
       return copyFile(itemOriginPath, itemDestinationPath)
     }
