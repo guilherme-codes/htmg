@@ -9,7 +9,8 @@ import { build } from '../build.js'
 
 const paths = [
   getBasePath(env.pagesDir),
-  getBasePath(env.layoutsDir)
+  getBasePath(env.layoutsDir),
+  getBasePath(env.assetsDir)
 ]
 
 export function watchChanges() {

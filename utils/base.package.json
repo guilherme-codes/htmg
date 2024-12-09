@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "htmg dev",
+    "build": "htmg build"
+  },
+  "devDependencies": {
+    "htmg": "github:guilherme-codes/htmg"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
