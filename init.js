@@ -90,6 +90,4 @@ async function copyBaseTemplate() {
   }
 }
 
-
-
 run()
