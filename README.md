@@ -32,9 +32,18 @@ This will generate a basic template structure. To start developing your site:
 npm run dev
 ```
 
-## Configuration
+## Default directory structure
+```
+your-project/
+  ├── pages/         
+  ├── layouts/        
+  ├── assets/         
+  └── dist/           
+```
 
-HTMG can be configured using a `.env` file in your project root. While the default configuration works out of the box, you can customize the directory structure and site settings:
+## Customization
+
+HTMG can be customized using a `.env` file in your project root. While the default configuration works out of the box, you can customize the directory structure and site settings:
 
 ```env
 # Directory Configuration
@@ -47,14 +56,6 @@ ASSETS_DIR=assets     # Directory for static assets
 SITE_URL=https://example.com  # Your website URL for SEO.
 ```
 
-Default directory structure:
-```
-your-project/
-  ├── pages/         
-  ├── layouts/        
-  ├── assets/         
-  └── dist/           
-```
 
 ## Project Structure
 
