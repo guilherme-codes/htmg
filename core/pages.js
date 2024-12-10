@@ -150,10 +150,13 @@ async function ensureDirectoryExists(dir) {
  */
 async function createOutputDir() {
   try {
+    log.cleaningOutputDir()
+
     await fs.promises.rm(env.outputDir, { recursive: true, force: true })
     await fs.promises.mkdir(env.outputDir, { recursive: true })
   } catch (error) {
-    // TODO: Handle error
+    log.createOutputDirError(error)
+    
     throw error
   }
 }

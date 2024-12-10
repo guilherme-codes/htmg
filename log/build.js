@@ -105,3 +105,16 @@ export function buildingSitemapError(error) {
 export function buildComplete() {
   F.formatSuccess(messages.BUILD_COMPLETE())
 }
+
+export function createOutputDirError(error) {
+  F.formatError(
+    messages.CREATE_OUTPUT_DIR_ERROR(),
+    error
+  )
+
+  process.exit(1)
+}
+
+export function cleaningOutputDir() {
+  F.formatInfo(messages.CLEANING_OUTPUT_DIR())
+}

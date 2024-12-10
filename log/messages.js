@@ -26,6 +26,7 @@ const logMessages = {
   WRITE_OUTPUT_FILE_ERROR: (file) => `Error: creating page ${file}`,
   INSERT_HTML_INTO_LAYOUT_ERROR: (layoutName) => `Error: inserting HTML into layout "${layoutName}"`,
   BUILD_ASSETS_ERROR: () => 'Error: building assets',
+  CREATE_OUTPUT_DIR_ERROR: () => 'Error: creating output directory',
 
   //build
   PAGES_BUILD_SUCCESS: () => 'All pages built successfully!',
@@ -36,6 +37,7 @@ const logMessages = {
   WELCOME: () => 'Welcome to HTMG. You\'re on dev mode now!',
   STARTING_SERVER: (port) => `Server started at http://localhost:${port}`,
   BUILD_COMPLETE: () => 'Build complete!',
+  CLEANING_OUTPUT_DIR: () => 'Cleaning output directory...',
 
   // commands
   COMMAND_NOT_FOUND: (command) => `Unknown command: ${command}. Use --help to see available commands`,

@@ -24,6 +24,9 @@ Welcome to HTMG
   - [x] Use env vars.
   - [x] logs for build assets.
   - [x] logs for build sitemap.
+  - [x] use pages as start point and only process and store a layout when found a page that is using it.
+  - [x] init script?
+
   - [ ] SEO directives.
   - [ ] Purge and Minify assets??
   - [ ] add docs and doctrine.
@@ -32,9 +35,7 @@ Welcome to HTMG
   - [ ] More layouts directives?
     - insert title in any place eg:  `<h1> <!-- layout_title --> </h1>`
   - [ ] use streams to read files?
-  - [ ] use pages as start point and only process and store a layout when found a page that is using it.
   - [ ] sanitize it ?
-  - [ ] init script?
   - [ ] All or Nothing operation: if the process fail in any step,
         it should be interrupted and the output folder should be deleted.
         
