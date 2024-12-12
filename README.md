@@ -12,10 +12,9 @@ HTMG is a lightweight static site generator built with Node.js that supports bot
 - Zero configuration needed
 - Support for HTML and Markdown files
 - Built-in layouts and partials system
-- Automatic SEO meta tags generation
+- SEO meta tags generation
 - Asset minification
 - Sitemap generation
-- Hot reload development server
 - Customizable directory structure
 
 ## Quick Start
