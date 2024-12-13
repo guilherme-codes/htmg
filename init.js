@@ -6,27 +6,11 @@ import { fileURLToPath } from 'url'
 import { basePackageJson } from './utils/base.package.js'
 import * as log from './log/index.js'
 import { askQuestion } from './utils/prompt.js'
+import { projectTitleRegex } from './utils/regex.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-/**
- * Runs the initialization process for the project.
- * Checks if the package.json file exists and exits with an error if it does.
- * Otherwise, initializes the project.
- */
-async function run() {
-  const packageJsonPath = getExecBasePath('package.json')
-  
-  try {
-    await fs.access(packageJsonPath)
-
-    log.repositoryExistsError()
-    process.exit(1)
-  } catch {
-    initializeProject()
-  }
-}
 
 /**
  * Initializes the project by asking for the project name, adding a package.json file,
@@ -34,16 +18,17 @@ async function run() {
  * 
  * @returns {Promise<void>} A promise that resolves when the project initialization is complete.
  */
-async function initializeProject() {
+async function run() {
   const projectName = await askQuestion(log.askProjectName())
-  
+  validateProjectName(projectName)
+
   try {
     log.initializingProject()
 
     await addPackageJson(projectName)
-    await copyBaseTemplate()
+    await copyBaseTemplate(projectName)
     await spawn('npm', ['install'], { 
-      cwd: getExecBasePath(),
+      cwd: getExecBasePath(projectName),
       stdio: 'inherit'  
     })
 
@@ -53,15 +38,32 @@ async function initializeProject() {
 }
 
 /**
+ * Validates the project name.
+ * @param {string} projectName - The name of the project.
+ */
+function validateProjectName(projectName) {
+  if (projectName.trim() === '.') {
+    return
+  } else if (!projectName || projectName.trim() === '') {
+    log.projectNameRequired()
+    process.exit(1)
+  } else if (projectTitleRegex.test(projectName)) {
+    log.invalidProjectName()
+    process.exit(1)
+  }
+}
+
+/**
  * Adds a package.json file to the project with the specified name.
  * @param {string} projectName - The name of the project.
  * @returns {Promise<void>} - A promise that resolves when the package.json file is successfully written.
  */
 async function addPackageJson(projectName) {
-  const packageJsonPath = getExecBasePath('package.json')
+  const packageJsonPath = getExecBasePath(path.join(projectName, 'package.json'))
   const packageJson = {name: projectName, ...basePackageJson}
 
   try {
+    await addDirectory(projectName)
     await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2))
   } catch (error) {
     log.unexpectedError(error)
@@ -69,11 +71,30 @@ async function addPackageJson(projectName) {
 }
 
 /**
+ * Creates a new directory for the project.
+ *
+ * @param {string} projectName - The name of the project directory.
+ * @returns {Promise<void>} - A promise that resolves when the directory is created.
+ */
+async function addDirectory(projectName) {
+  if (projectName === '.') {
+    return
+  }
+  
+  try {
+    await fs.mkdir(getExecBasePath(projectName))
+  } catch (error) {
+    log.unexpectedError(error)
+  }
+}
+
+/**
  * Copies files from a template directory to the execution base path.
+ * @param {string} projectName - The name of the project
  * @returns {Promise<void>} A promise that resolves when the files are copied successfully, 
  * or rejects with an error.
  */
-async function copyBaseTemplate() {
+async function copyBaseTemplate(projectName) {
   const templatePath = path.join(__dirname, 'template')
   const files = await fs.readdir(templatePath)
 
@@ -81,7 +102,7 @@ async function copyBaseTemplate() {
     await Promise.all(files.map(file => 
       fs.cp(
         path.join(templatePath, file), 
-        `${getExecBasePath(file)}`, 
+        `${getExecBasePath(path.join(projectName, file))}`, 
         { recursive: true }
       )
     ))

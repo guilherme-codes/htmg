@@ -10,6 +10,7 @@ const headTagRegex = new RegExp(`<head(${HTML_TAG_ATTRIBUTES})?>.*?</head>`, 'is
 const endHeadTagRegex = new RegExp('</head>', 'i')
 const titleTagRegex = new RegExp(`<title(${HTML_TAG_ATTRIBUTES})?>(.*?)</title>`, 'i')
 const pageContentRegex = new RegExp('<!--\\s*page_content\\s*-->', 'i') 
+const projectTitleRegex = new RegExp('/^(?!\s*$)[^<>:"/\\|?*\n\r\t]{1,30}$/', 'i')
 
 export {
   startHtmlRegex,
@@ -17,5 +18,6 @@ export {
   headTagRegex,
   titleTagRegex,
   endHeadTagRegex,
-  pageContentRegex
+  pageContentRegex,
+  projectTitleRegex
 }

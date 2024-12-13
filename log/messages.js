@@ -47,6 +47,8 @@ const logMessages = {
   INITIALIZING_PROJECT: () => 'Initializing project...',
   ASK_PROJECT_NAME: () => 'What is the name of your project? ',
   ERROR_REPOSITORY_EXISTS: () => 'There is already a package.json file in this directory.',
+  ERROR_PROJECT_NAME_REQUIRED: () => 'Project name is required.',
+  ERROR_INVALID_PROJECT_NAME: () => 'Invalid project name.',
 
   // assets
   PROCESSING_ASSETS: () => 'Processing assets...',

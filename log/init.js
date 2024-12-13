@@ -12,3 +12,11 @@ export function askProjectName() {
 export function repositoryExistsError() {
   F.formatError(messages.ERROR_REPOSITORY_EXISTS())
 }
+
+export function projectNameRequired() {
+  F.formatError(messages.ERROR_PROJECT_NAME_REQUIRED())
+}
+
+export function invalidProjectName() {
+  F.formatError(messages.ERROR_INVALID_PROJECT_NAME())
+}

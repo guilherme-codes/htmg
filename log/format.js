@@ -14,7 +14,9 @@ export function formatError(customMessage, error) {
   console.log(formattedMessage)
 
 
-  console.log(chalk.gray(error.stack))
+  if (error) {
+    console.log(chalk.gray(error.stack))
+  }
 }
 
 export function formatSuccess(customMessage) {
