@@ -92,7 +92,7 @@ Contains all static files used in your website:
 
 Contains your website content in either HTML or Markdown format. The content will be injected into the specified layout at the `<!-- page_content -->` placeholder.
 
-Pages can include front-matter style headers to specify metadata:
+Pages can include headers to specify metadata:
 
 ```html
 <!-- 
@@ -102,7 +102,6 @@ meta-description: In this article you will know more about Markdown.
 meta-locale: auto-generated
 meta-type: article
 meta-title: Know more about MD!
-meta-url: auto-generated
 meta-name: My site name
 -->
 ```
