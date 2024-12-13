@@ -70,7 +70,8 @@ function extractMetadataItems (lines) {
 export function injectMarkdownMetadata (layout, metadata) {
   return pipe(
     insertHeadTag,
-    layout => insertTitle(metadata, layout)
+    layout => insertTitle(metadata, layout),
+    layout => insertMetaDescription(metadata, layout)
   )(layout)
 }
  
@@ -106,6 +107,21 @@ function insertTitle(metadata, layoutContent) {
       })
     } else if (headCloseRegex.test(layoutContent)) {
       layoutContent = layoutContent.replace(headCloseRegex, `<title>${metadata.title}</title></head>`)
+    }
+  }
+
+  return layoutContent
+}
+
+function insertMetaDescription(metadata, layoutContent) {
+  const description = metadata['meta-description']
+
+  if (description) {
+    const metaDescription = `<meta name="description" content="${description}">`
+    const headCloseRegex = endHeadTagRegex
+
+    if (headCloseRegex.test(layoutContent)) {
+      layoutContent = layoutContent.replace(headCloseRegex, `${metaDescription}\n</head>`)
     }
   }
 
