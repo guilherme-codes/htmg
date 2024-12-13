@@ -3,6 +3,9 @@ import { pipe } from './fn.js'
 import { endHeadTagRegex, headTagRegex, markdownHeaderRegex, startHtmlRegex, titleTagRegex } from './regex.js'
 
 const converter = new Showdown.Converter()
+function insertBeforeHead(content, tag) {
+  return content.replace(endHeadTagRegex, `${tag}\n</head>`)
+}
 
 /**
  * Converts markdown content to HTML.
@@ -71,7 +74,7 @@ export function injectMarkdownMetadata (layout, metadata) {
   return pipe(
     insertHeadTag,
     layout => insertTitle(metadata, layout),
-    layout => insertMetaDescription(metadata, layout)
+    layout => insertMetaTags(metadata, layout)
   )(layout)
 }
  
@@ -98,30 +101,46 @@ function insertHeadTag(layoutContent) {
  */
 function insertTitle(metadata, layoutContent) {
   if (metadata?.title) {
-    const titleRegex = titleTagRegex
-    const headCloseRegex = endHeadTagRegex
+    const titleTag = `<title>${metadata.title}</title>`
 
-    if (titleRegex.test(layoutContent)) {
-      layoutContent = layoutContent.replace(titleRegex, (_, attributes = '') => {
+    if (titleTagRegex.test(layoutContent)) {
+      layoutContent = layoutContent.replace(titleTagRegex, (_, attributes = '') => {
         return `<title${attributes}>${metadata.title}</title>`
       })
-    } else if (headCloseRegex.test(layoutContent)) {
-      layoutContent = layoutContent.replace(headCloseRegex, `<title>${metadata.title}</title></head>`)
+    } else {
+      layoutContent = insertBeforeHead(layoutContent, titleTag)
     }
   }
 
   return layoutContent
 }
 
-function insertMetaDescription(metadata, layoutContent) {
-  const description = metadata['meta-description']
 
-  if (description) {
-    const metaDescription = `<meta name="description" content="${description}">`
-    const headCloseRegex = endHeadTagRegex
+function insertMetaTags(metadata, layoutContent) {
+  const metaTagsMap = {
+    'meta-title': { type: 'name', property: 'title' },
+    'meta-og-title': { type: 'property', property: 'og:title' },
+    'meta-twitter-title': { type: 'name', property: 'twitter:title' },
+    'meta-description': { type: 'name', property: 'description' },
+    'meta-og-description': { type: 'property', property: 'og:description' },
+    'meta-twitter-description': { type: 'name', property: 'twitter:description' },
+    'meta-keywords': { type: 'name', property: 'keywords' },
+    'meta-author': { type: 'name', property: 'author' },
+  }
 
-    if (headCloseRegex.test(layoutContent)) {
-      layoutContent = layoutContent.replace(headCloseRegex, `${metaDescription}\n</head>`)
+  for (const [name, { type, property }] of Object.entries(metaTagsMap)) {
+    const value = metadata[name]
+
+    if (value) {
+      const regex = new RegExp(
+        `<meta\s+${type}="${property}"\s+content="[^"]*"\s*/?>`,
+        'i'
+      )
+
+      if (!regex.test(layoutContent)) {
+        const tag = `<meta ${type}="${property}" content="${value}">`
+        layoutContent = insertBeforeHead(layoutContent, tag)
+      }
     }
   }
 
