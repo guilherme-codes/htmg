@@ -126,6 +126,10 @@ function insertMetaTags(metadata, layoutContent) {
     'meta-twitter-description': { type: 'name', property: 'twitter:description' },
     'meta-keywords': { type: 'name', property: 'keywords' },
     'meta-author': { type: 'name', property: 'author' },
+    'meta-og-image': { type: 'property', property: 'og:image' },
+    'meta-twitter-image': { type: 'name', property: 'twitter:image' },
+    'meta-twitter-card': { type: 'name', property: 'twitter:card' },
+    'meta-og-url': { type: 'property', property: 'og:url' },
   }
 
   for (const [name, { type, property }] of Object.entries(metaTagsMap)) {
