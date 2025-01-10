@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import path from 'path'
 import { fileURLToPath } from 'url'
 import * as log from './log/index.js'
@@ -25,6 +23,8 @@ function getCommand (command) {
       await executeCommand(path.join(baseDir, 'init.js'))
     },
     dev: async () => {
+      process.env.NODE_ENV = 'development'
+      
       await executeCommand(path.join(baseDir, 'build.js'))
       await executeCommand(path.join(baseDir, 'dev.js'))
     },

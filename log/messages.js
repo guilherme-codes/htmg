@@ -25,7 +25,7 @@ const logMessages = {
   BUILD_LAYOUT_FILES_ERROR: (layoutName) => `Error: compiling layout files for "${layoutName}"`,
   WRITE_OUTPUT_FILE_ERROR: (file) => `Error: creating page ${file}`,
   INSERT_HTML_INTO_LAYOUT_ERROR: (layoutName) => `Error: inserting HTML into layout "${layoutName}"`,
-  BUILD_ASSETS_ERROR: () => 'Error: building assets',
+  BUILD_ASSETS_ERROR: () => 'Error: building public assets',
   CREATE_OUTPUT_DIR_ERROR: () => 'Error: creating output directory',
 
   //build
@@ -51,7 +51,7 @@ const logMessages = {
   ERROR_INVALID_PROJECT_NAME: () => 'Invalid project name.',
 
   // assets
-  PROCESSING_ASSETS: () => 'Processing assets...',
+  PROCESSING_ASSETS: () => 'Processing public assets...',
 
   // sitemap
   SITEMAP_BUILDING: () => 'Building sitemap...',

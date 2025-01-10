@@ -36,7 +36,7 @@ npm run dev
 your-project/
   ├── pages/         
   ├── layouts/        
-  ├── assets/         
+  ├── public/         
   └── dist/           
 ```
 
@@ -49,7 +49,7 @@ HTMG can be customized using a `.env` file in your project root. While the defau
 OUTPUT_DIR=dist        # Output directory for built files
 PAGES_DIR=pages       # Source directory for your content
 LAYOUTS_DIR=layouts   # Directory containing your layouts
-ASSETS_DIR=assets     # Directory for static assets
+PUBLIC_DIR=public     # Directory for public assets
 
 # Site Configuration
 SITE_URL=https://example.com  # Your website URL for SEO.
@@ -80,7 +80,7 @@ Example usage in `index.html`:
 <!-- include: footer -->
 ```
 
-### `/assets` (or custom ASSETS_DIR)
+### `/plubic` (or custom PUBLIC_DIR)
 
 Contains all static files used in your website:
 - JavaScript files
@@ -127,7 +127,7 @@ npm run build
 The build process:
 1. Generates the static site in the `/dist` directory (or custom OUTPUT_DIR)
 2. Maintains the same folder structure as defined in `/pages`
-3. Minifies all assets and HTML files
+3. Minifies all public assets: HTML, CSS and JS files
 4. Generates SEO meta tags based on page metadata
 5. Creates a sitemap for better search engine indexing
 

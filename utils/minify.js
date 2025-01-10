@@ -1,12 +1,12 @@
 /**
- * Minify HTML content
- * 
- * @param {string} html - The HTML content to minify
- *  
- * @returns {string} - The minified HTML content
+ * Minifies HTML, CSS and JS content
  */
 
 import { minify } from 'html-minifier'
+import postcss from 'postcss'
+import cssnano from 'cssnano'
+import uglifyJS from 'uglify-js'
+import * as log from '../log/index.js'
 
 export function minifyHtml(html) {
   return minify(html, {
@@ -21,4 +21,59 @@ export function minifyHtml(html) {
     collapseWhitespace: true
   
   })
+}
+
+/**
+ * Minifies CSS content using postcss with cssnano.
+ * 
+ * @param {string} content - The CSS content to minify.
+ */
+export async function minifyCSS(content) {
+  try {
+    const result = await postcss([cssnano({
+      preset: ['default', {
+        discardComments: { removeAll: true },
+        normalizeWhitespace: true
+      }]
+    })])
+      .process(content, { from: undefined })
+    
+    return result.css
+  } catch (error) {
+    log.buildAssetsError(`Error minifying CSS: ${error}`)
+    throw error
+  }
+}
+
+
+/**
+ * Minifies JavaScript content using UglifyJS.
+ * 
+ * @param {string} content - The JavaScript content to minify.
+ */
+export async function minifyJS(content) {
+  try {
+    const result = uglifyJS.minify(content, {
+      compress: {
+        dead_code: true,
+        drop_console: false,
+        drop_debugger: true,
+        keep_fnames: false,
+        keep_infinity: true,
+        passes: 2
+      },
+      mangle: {
+        eval: true,
+        keep_fnames: false
+      },
+      output: {
+        comments: false
+      }
+    })
+
+    return result.code
+  } catch (error) {
+    log.buildAssetsError(`Error minifying JavaScript: ${error}`)
+    throw error
+  }
 }

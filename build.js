@@ -6,7 +6,7 @@ import env from './utils/environment.js'
 import { getExecBasePath } from './utils/path.js'
 import * as log from './log/build.js'
 
-const assets = getExecBasePath(env.assetsDir)
+const assets = getExecBasePath(env.publicDir)
 const output = getExecBasePath(env.outputDir)
 
 export async function build() {

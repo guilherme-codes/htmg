@@ -28,7 +28,9 @@ Welcome to HTMG
   - [x] init script?
 
   - [x] SEO directives.
-  - [ ] Purge and Minify assets??
+  - [x] Purge and Minify assets??
+  - [ ] only minify if it's not in dev mode.
+  - [ ] Check if a repository is already initialized.
   - [ ] add docs and doctrine.
   - [ ] All or Nothing operation: if the process fail in any step,
   - [ ] add unit tests.

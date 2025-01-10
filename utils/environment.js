@@ -11,7 +11,7 @@ const envs = {
   outputDir: env.get('OUTPUT_DIR').default('dist').asString(),
   pagesDir: env.get('PAGES_DIR').default('pages').asString(),
   layoutsDir: env.get('LAYOUTS_DIR').default('layouts').asString(),
-  assetsDir: env.get('ASSETS_DIR').default('assets').asString(),
+  publicDir: env.get('PUBLIC_DIR').default('public').asString(),
   siteUrl: env.get('SITE_URL').asString() || 'http://localhost:3006',
 }
 
