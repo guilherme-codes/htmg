@@ -30,8 +30,8 @@ Welcome to HTMG
   - [x] SEO directives.
   - [ ] Purge and Minify assets??
   - [ ] add docs and doctrine.
-  - [ ] add unit tests.
   - [ ] All or Nothing operation: if the process fail in any step,
+  - [ ] add unit tests.
         it should be interrupted and the output folder should be deleted.
         
   - [ ] add to npmjs.com.

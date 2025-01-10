@@ -116,6 +116,13 @@ function insertTitle(metadata, layoutContent) {
 }
 
 
+/**
+ * Inserts meta tags into the layout content based on the provided metadata.
+ *
+ * @param {Object} metadata - An object containing meta tag values.
+ * @param {string} layoutContent - The HTML content of the layout where meta tags will be inserted.
+ * @returns {string} The updated layout content with the inserted meta tags.
+ */
 function insertMetaTags(metadata, layoutContent) {
   const metaTagsMap = {
     'meta-title': { type: 'name', property: 'title' },
