@@ -78,6 +78,13 @@ async function addPackageJson(projectName) {
  */
 async function addDirectory(projectName) {
   if (projectName === '.') {
+    const isEmpty = await isDirectoryEmpty()
+
+    if (!isEmpty) {
+      log.directoryNotEmpty()
+      process.exit(1)
+    }
+
     return
   }
   
@@ -85,6 +92,19 @@ async function addDirectory(projectName) {
     await fs.mkdir(getExecBasePath(projectName))
   } catch (error) {
     log.unexpectedError(error)
+  }
+}
+
+async function isDirectoryEmpty() {
+  try {
+    const dirContents = await fs.readdir('.')
+    const visibleFiles = dirContents.filter(file => !file.startsWith('.'))
+
+    return visibleFiles.length === 0
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return true
+    }
   }
 }
 

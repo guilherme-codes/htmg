@@ -20,3 +20,7 @@ export function projectNameRequired() {
 export function invalidProjectName() {
   F.formatError(messages.ERROR_INVALID_PROJECT_NAME())
 }
+
+export function directoryNotEmpty() {
+  F.formatError(messages.ERROR_DIRECTORY_NOT_EMPTY())
+}

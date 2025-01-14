@@ -49,6 +49,7 @@ const logMessages = {
   ERROR_REPOSITORY_EXISTS: () => 'There is already a package.json file in this directory.',
   ERROR_PROJECT_NAME_REQUIRED: () => 'Project name is required.',
   ERROR_INVALID_PROJECT_NAME: () => 'Invalid project name.',
+  ERROR_DIRECTORY_NOT_EMPTY: () => 'Directory should be empty.',
 
   // assets
   PROCESSING_ASSETS: () => 'Processing public assets...',
