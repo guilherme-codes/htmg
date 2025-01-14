@@ -96,6 +96,18 @@ async function addDirectory(projectName) {
   }
 }
 
+/**
+ * Checks if the current directory is empty.
+ *
+ * This function reads the contents of the current directory and filters out
+ * any hidden files (files starting with a dot). It returns true if there are
+ * no visible files in the directory, and false otherwise.
+ *
+ * @async
+ * @function isDirectoryEmpty
+ * @returns {Promise<boolean>} A promise that resolves to true if the directory is empty, false otherwise.
+ * @throws {Error} If there is an error reading the directory, other than the directory not existing.
+ */
 async function isDirectoryEmpty() {
   try {
     const dirContents = await fs.readdir('.')
@@ -103,9 +115,7 @@ async function isDirectoryEmpty() {
 
     return visibleFiles.length === 0
   } catch (error) {
-    if (error.code === 'ENOENT') {
-      return true
-    }
+    return error.code === 'ENOENT'
   }
 }
 
