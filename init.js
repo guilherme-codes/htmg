@@ -60,7 +60,8 @@ function validateProjectName(projectName) {
  */
 async function addPackageJson(projectName) {
   const packageJsonPath = getExecBasePath(path.join(projectName, 'package.json'))
-  const packageJson = {name: projectName, ...basePackageJson}
+  const packageName = projectName === '.'  ? path.basename(process.cwd()) : projectName
+  const packageJson = {name: packageName, ...basePackageJson}
 
   try {
     await addDirectory(projectName)
