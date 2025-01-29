@@ -31,6 +31,7 @@ Welcome to HTMG
   - [x] Purge and Minify assets??
   - [ ] only minify if it's not in dev mode.
   - [ ] Check if a repository is already initialized.
+  - [ ] Replace console.log
   - [ ] add docs and doctrine.
   - [ ] All or Nothing operation: if the process fail in any step,
   - [ ] add unit tests.

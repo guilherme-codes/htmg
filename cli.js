@@ -3,6 +3,7 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import * as log from './log/index.js'
+import { CommandType } from './utils/constants.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const baseDir =  path.dirname(__filename)
@@ -25,12 +26,14 @@ function getCommand (command) {
       await executeCommand(path.join(baseDir, 'init.js'))
     },
     dev: async () => {
-      process.env.NODE_ENV = 'development'
+      process.env.COMMAND = CommandType.dev
       
       await executeCommand(path.join(baseDir, 'build.js'))
       await executeCommand(path.join(baseDir, 'dev.js'))
     },
     build: async () => {
+      process.env.COMMAND = CommandType.build
+
       await executeCommand(path.join(baseDir, 'build.js'))
     },
     '--help': () => log.help()

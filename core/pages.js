@@ -88,7 +88,7 @@ function createPageContentTransform(layouts, isMarkdown) {
           chunk => chunk.toString(),
           content => extractPageData(content, isMarkdown),
           data => injectHtmlMetadata(data, layouts),
-          finalHtml => minifyHtml(finalHtml)
+          finalHtml =>  minifyHtml(finalHtml) 
         )
 
         callback(null, html(chunk))
