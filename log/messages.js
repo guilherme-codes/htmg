@@ -37,14 +37,14 @@ const logMessages = {
   WELCOME: () => 'Welcome to HTMG. You\'re on dev mode now!',
   STARTING_SERVER: (port) => `Server started at http://localhost:${port}`,
   BUILD_COMPLETE: () => 'Build complete!',
-  CLEANING_OUTPUT_DIR: () => 'Cleaning output directory...',
+  CLEANING_OUTPUT_DIR: () => 'Cleaning output directory',
 
   // commands
   COMMAND_NOT_FOUND: (command) => `Unknown command: ${command}. Use --help to see available commands`,
   UNEXPECTED_ERROR: () => 'Unexpected Error',
 
   // init
-  INITIALIZING_PROJECT: () => 'Initializing project...',
+  INITIALIZING_PROJECT: () => 'Initializing project',
   ASK_PROJECT_NAME: () => 'What is the name of your project? ',
   ERROR_REPOSITORY_EXISTS: () => 'There is already a package.json file in this directory.',
   ERROR_PROJECT_NAME_REQUIRED: () => 'Project name is required.',
@@ -52,11 +52,13 @@ const logMessages = {
   ERROR_DIRECTORY_NOT_EMPTY: () => 'Directory should be empty.',
 
   // assets
-  PROCESSING_ASSETS: () => 'Processing public assets...',
+  PROCESSING_ASSETS: () => 'Processing public assets',
 
   // sitemap
-  SITEMAP_BUILDING: () => 'Building sitemap...',
+  SITEMAP_BUILDING: () => 'Building sitemap',
   ERRO_BUILDING_SITEMAP: () => 'Error building sitemap',
+  MINIFY_CSS: (file) => `Minifying CSS file: ${file}`,
+  MINIFY_JS: (file) => `Minifying JavaScript file: ${file}`,
   
 }
 

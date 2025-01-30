@@ -15,7 +15,7 @@ import { minifyCSS, minifyJS } from '../utils/minify.js'
  */
 export async function buildAssets(origin, dest) {
   log.processingAssets()
-  processAssets(origin, dest)
+  await processAssets(origin, dest)
 }
 
 async function processAssets(origin, dest) {  
@@ -45,27 +45,28 @@ async function processFile(sourcePath, destPath) {
   
   try {
     const content = await readFile(sourcePath, 'utf8')
+    const file = path.basename(sourcePath)
+
     let processedContent
 
     switch (extension) {
     case '.css':
       processedContent = await minifyCSS(content)
       await writeFile(destPath, processedContent)
-      console.log(`Minified CSS file: ${path.basename(sourcePath)}`)
+      log.minifyingCSS(file)
       break
       
     case '.js':
       processedContent = await minifyJS(content)
       await writeFile(destPath, processedContent)
-      console.log(`Minified JavaScript file: ${path.basename(sourcePath)}`)
+      log.minifyingJS(file)
       break
       
     default:
       await copyFile(sourcePath, destPath)
-      console.log(`Copied file: ${path.basename(sourcePath)}`)
     }
   } catch (error) {
-    log.buildAssetsError(`Error processing file ${sourcePath}: ${error}`)
+    log.buildAssetsError(error)
     throw error
   }
 }

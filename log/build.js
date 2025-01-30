@@ -103,6 +103,7 @@ export function buildingSitemapError(error) {
 }
 
 export function buildComplete() {
+  console.log('\n')
   F.formatSuccess(messages.BUILD_COMPLETE())
 }
 
@@ -117,4 +118,12 @@ export function createOutputDirError(error) {
 
 export function cleaningOutputDir() {
   F.formatInfo(messages.CLEANING_OUTPUT_DIR())
+}
+
+export function minifyingCSS(file) {
+  F.formatInfo(messages.MINIFY_CSS(file))
+}
+
+export function minifyingJS(file) {
+  F.formatInfo(messages.MINIFY_JS(file))
 }
