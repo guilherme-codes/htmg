@@ -3,7 +3,7 @@
  */
 
 import messages from './messages.js'
-import * as F from './handle.js'
+import * as F from './handler.js'
 
 export function accessPathError(path, error) {
   F.handleError(

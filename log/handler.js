@@ -7,7 +7,6 @@ import { getExecBasePath } from '../utils/path.js'
 import envs from '../utils/environment.js'
 import fs from 'fs'
 
-const output = getExecBasePath(envs.outputDir)
 
 export function handleError(customMessage, error) {
   let formattedMessage = chalk.red(customMessage)
@@ -22,6 +21,12 @@ export function handleError(customMessage, error) {
   if (error) {
     console.log(chalk.gray(error.stack))
   }
+
+  killProcess()
+}
+
+function killProcess() {
+  const output = getExecBasePath(envs.outputDir)
 
   fs.rmSync(output, { recursive: true, force: true })
   process.exit(1)

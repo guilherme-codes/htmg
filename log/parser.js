@@ -1,7 +1,7 @@
 /**
  * Log messages for parsing step
  */
-import * as F from './handle.js'
+import * as F from './handler.js'
 import messages from './messages.js'
 
 export function parserFileContentError(directory, error) {

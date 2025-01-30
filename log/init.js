@@ -1,4 +1,4 @@
-import * as F from './handle.js'
+import * as F from './handler.js'
 import messages from './messages.js'
 
 export function initializingProject() {
