@@ -14,7 +14,7 @@ async function run () {
 
   if (!selectedCommand) {
     log.commandNotFound(command)
-    process.exit(1)
+    
   }
 
   await selectedCommand()
@@ -48,12 +48,12 @@ async function executeCommand(scriptPath) {
   } catch (error) {
     console.log(error)
     log.unexpectedError(error.message)
-    process.exit(1)
+    
   }
 }
 
 
 run().catch(error => {
   log.unexpectedError(error.message)
-  process.exit(1)
+  
 })

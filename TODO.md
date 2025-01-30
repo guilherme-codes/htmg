@@ -29,11 +29,11 @@ Welcome to HTMG
 
   - [x] SEO directives.
   - [x] Purge and Minify assets??
-  - [ ] only minify if it's not in dev mode.
+  - [x] All or Nothing operation: if the process fail in any step,
+  - [x] only minify if it's not in dev mode.
   - [ ] Check if a repository is already initialized.
   - [ ] Replace console.log
   - [ ] add docs and doctrine.
-  - [ ] All or Nothing operation: if the process fail in any step,
   - [ ] add unit tests.
         it should be interrupted and the output folder should be deleted.
         

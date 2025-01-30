@@ -1,129 +1,113 @@
 /**
  * Log messages for building step
  */
-import * as F from './format.js'
+import * as F from './handle.js'
 import messages from './messages.js'
 
 export function compileLayoutsError(error) {
-  F.formatError(
+  F.handleError(
     messages.BUILD_LAYOUTS_ERROR(),
     error
   )
-
-  process.exit(1)
 }
 
 export function indexNotFoundError(layoutName) {
-  F.formatError(
+  F.handleError(
     messages.INDEX_NOT_FOUND_ERROR(layoutName)
   )
-
-  process.exit(1)
 }
 
 export function compileLayoutFilesError(layoutName, error) {
-  F.formatError(
+  F.handleError(
     messages.BUILD_LAYOUT_FILES_ERROR(layoutName),
     error
   )
 }
 
 export function writeOutputFileError(file, error) {
-  F.formatError(
+  F.handleError(
     messages.WRITE_OUTPUT_FILE_ERROR(file),
     error
   )
-
-  process.exit(1)
 }
 
 export function insertHtmlIntoLayoutError(layoutName, error) {
-  F.formatError(
+  F.handleError(
     messages.INSERT_HTML_INTO_LAYOUT_ERROR(layoutName),
     error
   )
-
-  process.exit(1)
 }
 
 export function compileMarkdownFilesError(error) {
-  F.formatError(
+  F.handleError(
     messages.BUILD_MARKDOWN_FILES_ERROR(),
     error
   )
-
-  process.exit(1)
 }
 
 export function pagesBuildSuccess() {
-  F.formatSuccess(messages.PAGES_BUILD_SUCCESS())
+  F.handleSuccess(messages.PAGES_BUILD_SUCCESS())
 }
 
 export function buildingLayout(layoutName) {
-  F.formatInfo(messages.BUILDING_LAYOUT(layoutName))
+  F.handleInfo(messages.BUILDING_LAYOUT(layoutName))
 }
 
 export function allLayoutsBuilt() {
-  F.formatSuccess(messages.ALL_LAYOUTS_BUILT())
+  F.handleSuccess(messages.ALL_LAYOUTS_BUILT())
 }
 
 export function creatingFile(file) {
-  F.formatInfo(messages.CREATING_FILE(file))
+  F.handleInfo(messages.CREATING_FILE(file))
 }
 
 
 export function startServer(port) {
-  F.formatInfoHighlight(messages.WELCOME())
-  F.formatInfo(messages.STARTING_SERVER(port))
+  F.handleHighlight(messages.WELCOME())
+  F.handleInfo(messages.STARTING_SERVER(port))
 }
 export function processingAssets() {
-  F.formatInfo(messages.PROCESSING_ASSETS())
+  F.handleInfo(messages.PROCESSING_ASSETS())
 }
 
 export function buildAssetsError(error) {
-  F.formatError(
+  F.handleError(
     messages.BUILD_ASSETS_ERROR(),
     error
   )
-
-  process.exit(1)
 }
 
 export function buildingSitemap() {
-  F.formatInfo(messages.SITEMAP_BUILDING())
+  F.handleInfo(messages.SITEMAP_BUILDING())
 }
 
 export function buildingSitemapError(error) {
-  F.formatError(
+  F.handleError(
     messages.ERRO_BUILDING_SITEMAP(),
     error
   )
-
-  process.exit(1)
 }
 
 export function buildComplete() {
   console.log('\n')
-  F.formatSuccess(messages.BUILD_COMPLETE())
+  F.handleSuccess(messages.BUILD_COMPLETE())
 }
 
 export function createOutputDirError(error) {
-  F.formatError(
+  F.handleError(
     messages.CREATE_OUTPUT_DIR_ERROR(),
     error
   )
-
-  process.exit(1)
 }
 
 export function cleaningOutputDir() {
-  F.formatInfo(messages.CLEANING_OUTPUT_DIR())
+  F.handleInfo(messages.CLEANING_OUTPUT_DIR())
 }
 
 export function minifyingCSS(file) {
-  F.formatInfo(messages.MINIFY_CSS(file))
+  F.handleInfo(messages.MINIFY_CSS(file))
 }
 
 export function minifyingJS(file) {
-  F.formatInfo(messages.MINIFY_JS(file))
+  F.handleInfo(messages.MINIFY_JS(file))
 }

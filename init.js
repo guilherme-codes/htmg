@@ -46,10 +46,10 @@ function validateProjectName(projectName) {
     return
   } else if (!projectName || projectName.trim() === '') {
     log.projectNameRequired()
-    process.exit(1)
+    
   } else if (projectTitleRegex.test(projectName)) {
     log.invalidProjectName()
-    process.exit(1)
+    
   }
 }
 
@@ -83,7 +83,7 @@ async function addDirectory(projectName) {
 
     if (!isEmpty) {
       log.directoryNotEmpty()
-      process.exit(1)
+      
     }
 
     return

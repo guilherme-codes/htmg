@@ -1,46 +1,38 @@
 /**
  * Log messages for parsing step
  */
-import {formatError, formatInfo} from './format.js'
+import * as F from './handle.js'
 import messages from './messages.js'
 
 export function parserFileContentError(directory, error) {
-  formatError(
+  F.handleError(
     messages.PARSER_FILE_CONTENT_ERROR(),
     error
   )
-
-  process.exit(1)
 }
 
 export function parserPartialsError(partialName, error) {
-  formatError(
+  F.handleError(
     messages.PARSER_PARTIALS_ERROR(partialName),
     error
   )
-
-  process.exit(1)
 }
 
 
 export function parserPartialNotFound(partialName) {
-  formatError(
+  F.handleError(
     messages.PARSER_PARTIAL_NOT_FOUND(partialName)
   )
-
-  process.exit(1)
 }
 
 export function parserCircularDependencyError(partialName) {
-  formatError(
+  F.handleError(
     messages.PARSER_CIRCULAR_DEPENDENCY_ERROR(partialName)
   )
-
-  process.exit(1)
 }
 
 export function parsingPage(file) {
-  formatInfo(
+  F.handleInfo(
     messages.PARSING_PAGE(file),
   )
 }

@@ -3,8 +3,13 @@
 **/
 
 import chalk from 'chalk'
+import { getExecBasePath } from '../utils/path.js'
+import envs from '../utils/environment.js'
+import fs from 'fs'
 
-export function formatError(customMessage, error) {
+const output = getExecBasePath(envs.outputDir)
+
+export function handleError(customMessage, error) {
   let formattedMessage = chalk.red(customMessage)
 
   if (process.stdout.isTTY) {
@@ -17,9 +22,12 @@ export function formatError(customMessage, error) {
   if (error) {
     console.log(chalk.gray(error.stack))
   }
+
+  fs.rmSync(output, { recursive: true, force: true })
+  process.exit(1)
 }
 
-export function formatSuccess(customMessage) {
+export function handleSuccess(customMessage) {
   let formattedMessage = chalk.green(customMessage)
 
   if (process.stdout.isTTY) {
@@ -30,7 +38,7 @@ export function formatSuccess(customMessage) {
   console.log('\n')
 }
 
-export function formatInfo(customMessage) {
+export function handleInfo(customMessage) {
   let formattedMessage = chalk.whiteBright(customMessage)
 
   if (process.stdout.isTTY) {
@@ -40,13 +48,13 @@ export function formatInfo(customMessage) {
   console.log(formattedMessage)
 }
 
-export function formatInfoHighlight(customMessage) {
+export function handleHighlight(customMessage) {
   let formattedMessage = chalk.blueBright(customMessage)
   console.log(formattedMessage)
   console.log('\n')
 }
 
-export function formatRemarks(customMessage) {
+export function handleRemarks(customMessage) {
   let formattedMessage = chalk.magenta(customMessage)
   return formattedMessage
 }

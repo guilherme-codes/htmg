@@ -2,17 +2,17 @@
  * Logs for CLI commands
  */
 
-import * as F from './format.js'
+import * as F from './handle.js'
 import messages from './messages.js'
 
 export function commandNotFound(command) {
-  return F.formatError(
+  return F.handleError(
     messages.COMMAND_NOT_FOUND(command)
   )
 }
 
 export function unexpectedError(error) {
-  return F.formatError(
+  return F.handleError(
     messages.UNEXPECTED_ERROR(),
     error
   )
@@ -20,12 +20,12 @@ export function unexpectedError(error) {
 
 export function help() {
   console.log(`
-${F.formatRemarks('Available commands')}
+${F.handleRemarks('Available commands')}
 
-  ${F.formatRemarks('dev')}   Inits the development server
+  ${F.handleRemarks('dev')}   Inits the development server
 
-  ${F.formatRemarks('build')}   Builds the project
+  ${F.handleRemarks('build')}   Builds the project
 
-  ${F.formatRemarks('--help')}   Shows this help message
+  ${F.handleRemarks('--help')}   Shows this help message
 `)
 }
