@@ -3,10 +3,7 @@
 **/
 
 import chalk from 'chalk'
-import { getExecBasePath } from '../utils/path.js'
-import envs from '../utils/environment.js'
-import fs from 'fs'
-
+import { processCleanUp } from './process.js'
 
 export function handleError(customMessage, error) {
   let formattedMessage = chalk.red(customMessage)
@@ -19,17 +16,12 @@ export function handleError(customMessage, error) {
 
 
   if (error) {
+    console.log('\n')
     console.log(chalk.gray(error.stack))
+    console.log('\n')
   }
 
-  killProcess()
-}
-
-function killProcess() {
-  const output = getExecBasePath(envs.outputDir)
-
-  fs.rmSync(output, { recursive: true, force: true })
-  process.exit(1)
+  processCleanUp()
 }
 
 export function handleSuccess(customMessage) {
