@@ -2,8 +2,8 @@
 
 HTMG is a lightweight static site generator built with Node.js that supports both HTML and Markdown files. It's designed to be a simple, zero-configuration solution for creating static websites.
 
-<p>
-  <img src="https://github.com/user-attachments/assets/abd3b49a-3e44-4cec-bfea-48a2343461ac" width="300" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/abd3b49a-3e44-4cec-bfea-48a2343461ac" width="500" />
 </p>
 
 ## Features
