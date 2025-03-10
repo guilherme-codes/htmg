@@ -48,9 +48,8 @@ function validateProjectName(projectName) {
   } else if (!projectName || projectName.trim() === '') {
     log.projectNameRequired()
     
-  } else if (projectTitleRegex.test(projectName)) {
+  } else if (!projectTitleRegex.test(projectName)) {
     log.invalidProjectName()
-    
   }
 }
 
