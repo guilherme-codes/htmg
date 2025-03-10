@@ -36,9 +36,5 @@ Welcome to HTMG
         it should be interrupted and the output folder should be deleted.
         
   - [ ] add to npmjs.com.
-    - create pages folder.
-    - create layouts folder.
-    - create assets (css, images, fonts) folder.
-    - create js folder.
 
 

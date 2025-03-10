@@ -4,7 +4,6 @@
 import dotenv from 'dotenv'
 import { getExecBasePath } from './path.js'
 import env from 'env-var'
-import { CommandType } from './constants.js'
 
 dotenv.config({ path: getExecBasePath('.env') })
 
