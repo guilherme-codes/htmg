@@ -82,8 +82,7 @@ async function addDirectory(projectName) {
     const isEmpty = await isDirectoryEmpty()
 
     if (!isEmpty) {
-      log.directoryNotEmpty()
-      
+      log.directoryNotEmptyError()
     }
 
     return

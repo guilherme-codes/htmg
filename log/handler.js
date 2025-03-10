@@ -5,7 +5,14 @@
 import chalk from 'chalk'
 import { processCleanUp } from './process.js'
 
-export function handleError(customMessage, error) {
+/**
+ * Handles and logs errors with optional cleanup.
+ *
+ * @param {string} customMessage - The custom error message to display.
+ * @param {Error} [error=undefined] - The error object containing the stack trace.
+ * @param {boolean} [cleanUp=true] - Whether to perform cleanup after logging the error.
+ */
+export function handleError(customMessage, error, cleanUp = true) {
   let formattedMessage = chalk.red(customMessage)
 
   if (process.stdout.isTTY) {
@@ -13,15 +20,17 @@ export function handleError(customMessage, error) {
   }
 
   console.log(formattedMessage)
+  console.log('\n')
 
 
   if (error) {
-    console.log('\n')
     console.log(chalk.gray(error.stack))
     console.log('\n')
   }
 
-  processCleanUp()
+  if (cleanUp) {
+    processCleanUp()
+  }
 }
 
 export function handleSuccess(customMessage) {

@@ -21,6 +21,8 @@ export function invalidProjectName() {
   F.handleError(messages.ERROR_INVALID_PROJECT_NAME())
 }
 
-export function directoryNotEmpty() {
-  F.handleError(messages.ERROR_DIRECTORY_NOT_EMPTY())
+export function directoryNotEmptyError() {
+  F.handleError(messages.ERROR_DIRECTORY_NOT_EMPTY(), undefined, false)
+
+  process.exit(1)
 }
