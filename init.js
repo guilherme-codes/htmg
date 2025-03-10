@@ -25,6 +25,7 @@ async function run() {
   try {
     log.initializingProject()
 
+    await initializeGit(projectName)
     await addPackageJson(projectName)
     await copyBaseTemplate(projectName)
     await spawn('npm', ['install'], { 
@@ -115,6 +116,39 @@ async function isDirectoryEmpty() {
     return visibleFiles.length === 0
   } catch (error) {
     return error.code === 'ENOENT'
+  }
+}
+
+/**
+ * Checks if Git is installed on the system by running the 'git --version' command.
+ * 
+ * @returns {Promise<boolean>} A promise that resolves to true if Git is installed, otherwise false.
+ */
+async function checkGitInstalled() {
+  return new Promise((resolve) => {
+    const process = spawn('git', ['--version'])
+
+    process.on('error', () => resolve(false))
+    process.on('close', (code) => resolve(code === 0))
+  })
+}
+
+/**
+ * Initializes a new Git repository in the specified project directory.
+ *
+ * @param {string} projectName - The name of the project directory where the Git repository will be initialized.
+ * @returns {Promise<void>} A promise that resolves when the Git repository has been initialized.
+ */
+async function initializeGit(projectName) {
+  const gitInstalled = await checkGitInstalled()
+
+  if (gitInstalled) {
+    await spawn('git', ['init'], 
+      { 
+        cwd: getExecBasePath(projectName), 
+        stdio: 'inherit' 
+      }
+    )
   }
 }
 
