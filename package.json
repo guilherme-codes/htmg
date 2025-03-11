@@ -1,6 +1,6 @@
 {
   "name": "htmg",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "main": "index.js",
   "scripts": {
     "build": "node --env-file .env ./build.js",
@@ -9,10 +9,10 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["HTML Generator", "Static Generator", "HTMG", "Gatsby", "Jekyll", "Hugo"],
+  "author": "Guilherme Cazaroto",
   "license": "MIT",
-  "description": "",
+  "description": "A free and open source static site generator.",
   "type": "module",
   "devDependencies": {
     "eslint": "^9.14.0"

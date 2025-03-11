@@ -1,12 +1,12 @@
-import { promises as fs } from 'fs'
 import path from 'path'
-import { getExecBasePath } from './utils/path.js'
-import { spawn } from 'child_process'
+import { promises as fs } from 'fs'
+import { spawn, execSync } from 'child_process'
 import { fileURLToPath } from 'url'
+import { getExecBasePath } from './utils/path.js'
 import { basePackageJson } from './utils/base.package.js'
-import * as log from './log/index.js'
 import { askQuestion } from './utils/prompt.js'
 import { projectTitleRegex } from './utils/regex.js'
+import * as log from './log/index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -25,13 +25,13 @@ async function run() {
   try {
     log.initializingProject()
 
-    await initializeGit(projectName)
     await addPackageJson(projectName)
     await copyBaseTemplate(projectName)
     await spawn('npm', ['install'], { 
       cwd: getExecBasePath(projectName),
       stdio: 'inherit'  
     })
+    await initializeGit(projectName)
 
   } catch (error) {
     log.unexpectedError(error)
@@ -118,38 +118,26 @@ async function isDirectoryEmpty() {
   }
 }
 
-/**
- * Checks if Git is installed on the system by running the 'git --version' command.
- * 
- * @returns {Promise<boolean>} A promise that resolves to true if Git is installed, otherwise false.
- */
-async function checkGitInstalled() {
-  return new Promise((resolve) => {
-    const process = spawn('git', ['--version'])
-
-    process.on('error', () => resolve(false))
-    process.on('close', (code) => resolve(code === 0))
-  })
-}
-
-/**
- * Initializes a new Git repository in the specified project directory.
- *
- * @param {string} projectName - The name of the project directory where the Git repository will be initialized.
- * @returns {Promise<void>} A promise that resolves when the Git repository has been initialized.
- */
-async function initializeGit(projectName) {
-  const gitInstalled = await checkGitInstalled()
-
-  if (gitInstalled) {
-    await spawn('git', ['init'], 
-      { 
-        cwd: getExecBasePath(projectName), 
-        stdio: 'inherit' 
-      }
-    )
+function isGitInstalled() {
+  try {
+    execSync('git --version', { stdio: 'ignore' })
+    return true
+  } catch {
+    return false
   }
 }
+
+async function initializeGit(projectName) {
+  if (isGitInstalled()) {    
+    return spawn('git', ['init', '--initial-branch=main'], {
+      cwd: getExecBasePath(projectName),
+      stdio: 'inherit'
+    })
+  }
+
+  Promise.resolve()
+}
+
 
 /**
  * Copies files from a template directory to the execution base path.
